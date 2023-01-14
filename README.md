@@ -1,0 +1,2 @@
+# inventory-laravel
+Inventory Laravel
