@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class MuContainer extends Model
 {
     use HasFactory;
+    
+    protected $connection = 'pgsql_common';
 
     protected $fillable = [];
     

@@ -13,7 +13,9 @@ class CreateMuMeasureUnitTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('mu_measure_unit_types', function (Blueprint $table) {
+        Schema::connection('pgsql_common')->dropIfExists('mu_measure_units');
+        Schema::connection('pgsql_common')->dropIfExists('mu_measure_unit_types');
+        Schema::connection('pgsql_common')->create('mu_measure_unit_types', function (Blueprint $table) {
             $table->id();
             $table->string('description');
             $table->timestamps();
@@ -28,6 +30,7 @@ class CreateMuMeasureUnitTypesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('mu_measure_unit_types');
+        Schema::connection('pgsql_common')->dropIfExists('mu_measure_units');
+        Schema::connection('pgsql_common')->dropIfExists('mu_measure_unit_types');
     }
 }

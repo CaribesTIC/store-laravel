@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'mysql'),
+    'default' => env('DB_CONNECTION', 'pgsql'),
 
     /*
     |--------------------------------------------------------------------------
@@ -71,6 +71,21 @@ return [
             'database' => env('DB_DATABASE', 'forge'),
             'username' => env('DB_USERNAME', 'forge'),
             'password' => env('DB_PASSWORD', ''),
+            'charset' => 'utf8',
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'search_path' => 'public',
+            'sslmode' => 'prefer',
+        ],
+
+        'pgsql_common' => [
+            'driver' => 'pgsql',
+            'url' => env('DATABASE_URL'),
+            'host' => env('DB_HOST_COMMON', '127.0.0.1'),
+            'port' => env('DB_PORT_COMMON', '5432'),
+            'database' => env('DB_DATABASE_COMMON', 'forge'),
+            'username' => env('DB_USERNAME_COMMON', 'forge'),
+            'password' => env('DB_PASSWORD_COMMON', ''),
             'charset' => 'utf8',
             'prefix' => '',
             'prefix_indexes' => true,
