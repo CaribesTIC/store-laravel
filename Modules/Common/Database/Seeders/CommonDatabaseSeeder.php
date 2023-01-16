@@ -17,15 +17,11 @@ class CommonDatabaseSeeder extends Seeder
         Model::unguard();
 
         $this->call([
+            //OthersTableSeeder:class,
             MuContainerSeeder::class,
             MuMeasureUnitTypeSeeder::class,
             MuMeasureUnitSeeder::class
         ]);
-        
-        //$this->call("MuContainerSeeder");
-        //$this->call("MuMeasureUnitTypeSeeder");
-        //$this->call("MuMeasureUnitSeeder");
-        // $this->call("OthersTableSeeder");
     }
 }
 
