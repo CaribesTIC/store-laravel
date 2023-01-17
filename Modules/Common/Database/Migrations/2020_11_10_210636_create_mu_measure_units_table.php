@@ -13,7 +13,8 @@ class CreateMuMeasureUnitsTable extends Migration
      */
     public function up()
     {
-        Schema::create('mu_measure_units', function (Blueprint $table) {
+        Schema::connection('pgsql_common')->dropIfExists('mu_measure_units');
+        Schema::connection('pgsql_common')->create('mu_measure_units', function (Blueprint $table) {
             $table->id();
             $table->integer('mu_measure_unit_types_id')->unsignedInteger();
             $table->string('description');
@@ -32,6 +33,6 @@ class CreateMuMeasureUnitsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('mu_measure_units');
+        Schema::connection('pgsql_common')->dropIfExists('mu_measure_units');
     }
 }

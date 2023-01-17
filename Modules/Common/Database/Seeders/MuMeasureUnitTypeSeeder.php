@@ -14,14 +14,14 @@ class MuMeasureUnitTypeSeeder extends Seeder
      */
     public function run()
     {
-        DB::statement("INSERT INTO public.mu_measure_unit_types VALUES (1, 'Longitud')");
-        DB::statement("INSERT INTO public.mu_measure_unit_types VALUES (2, 'Masa')");
-        DB::statement("INSERT INTO public.mu_measure_unit_types VALUES (3, 'Capacidad')");
-        DB::statement("INSERT INTO public.mu_measure_unit_types VALUES (4, 'Superficie')");
-        DB::statement("INSERT INTO public.mu_measure_unit_types VALUES (5, 'Superficie Agrarias')");
-        DB::statement("INSERT INTO public.mu_measure_unit_types VALUES (6, 'Volumen')");
-        DB::statement("INSERT INTO public.mu_measure_unit_types VALUES (7, 'Cantidad')");       
-        DB::statement(
+        DB::connection('pgsql_common')->statement("INSERT INTO public.mu_measure_unit_types VALUES (1, 'Longitud')");
+        DB::connection('pgsql_common')->statement("INSERT INTO public.mu_measure_unit_types VALUES (2, 'Masa')");
+        DB::connection('pgsql_common')->statement("INSERT INTO public.mu_measure_unit_types VALUES (3, 'Capacidad')");
+        DB::connection('pgsql_common')->statement("INSERT INTO public.mu_measure_unit_types VALUES (4, 'Superficie')");
+        DB::connection('pgsql_common')->statement("INSERT INTO public.mu_measure_unit_types VALUES (5, 'Superficie Agrarias')");
+        DB::connection('pgsql_common')->statement("INSERT INTO public.mu_measure_unit_types VALUES (6, 'Volumen')");
+        DB::connection('pgsql_common')->statement("INSERT INTO public.mu_measure_unit_types VALUES (7, 'Cantidad')");       
+        DB::connection('pgsql_common')->statement(
             "UPDATE public.mu_measure_unit_types
             SET created_at = now()::timestamp(0) without time zone,
                 updated_at = now()::timestamp(0) without time zone"

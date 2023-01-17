@@ -6,14 +6,16 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateMuContainersTable extends Migration
 {
+    // protected $connection = 'pgsql_common';
     /**
      * Run the migrations.
      *
      * @return void
      */
     public function up()
-    {
-        Schema::create('mu_containers', function (Blueprint $table) {
+    {   // https://github.com/nWidart/laravel-modules/issues/1520
+        Schema::connection('pgsql_common')->dropIfExists('mu_containers');
+        Schema::connection('pgsql_common')->create('mu_containers', function (Blueprint $table) {
             $table->id();           
             $table->string('description');
             $table->timestamps();
@@ -28,6 +30,6 @@ class CreateMuContainersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('mu_containers');
+        Schema::connection('pgsql_common')->dropIfExists('mu_containers');
     }
 }
