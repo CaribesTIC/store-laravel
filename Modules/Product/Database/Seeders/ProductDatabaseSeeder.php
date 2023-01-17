@@ -15,7 +15,13 @@ class ProductDatabaseSeeder extends Seeder
     public function run()
     {
         Model::unguard();
-
-        // $this->call("OthersTableSeeder");
+        // php artisan module:migrate-fresh --seed
+        $this->call([
+            //OthersTableSeeder:class,
+            CategoriesTableSeeder::class,
+            MarksTableSeeder::class,
+            ProductsTableSeeder::class,
+            PresentationsTableSeeder::class
+        ]);
     }
 }
