@@ -13,6 +13,16 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/common', function (Request $request) {
-    return $request->user();
+//Route::middleware('auth:api')->get('/common', function (Request $request) {
+//    return $request->user();
+//});
+
+Route::group(['prefix' => 'common'], function() {
+    Route::group(['prefix' => 'measure-unit'], function() {
+      Route::get('container', 'Modules\Common\Http\Controllers\MuContainerController@get');
+      //Route::get('type', 'MeasureUnit\MuMeasureUnitTypeController@get');
+      //Route::get('/{muMeasureUnitTypeId}', 'MeasureUnit\MuMeasureUnitController@get');    
+   });
 });
+
+
