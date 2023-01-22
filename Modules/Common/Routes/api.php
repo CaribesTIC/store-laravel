@@ -1,6 +1,21 @@
 <?php
 
 use Illuminate\Http\Request;
+use Modules\Common\Http\Controllers\GeoLocation\{
+    StateController,
+    MunicipalityController,
+    ParishController,
+    CityController,
+    ZoneTypeController,
+    RouteTypeController,
+    DomicileTypeController,
+    GeoLocationController
+};
+use Modules\Common\Http\Controllers\MeasureUnit\{
+  MuContainerController,
+  MuMeasureUnitTypeController,
+  MuMeasureUnitController
+};
 
 /*
 |--------------------------------------------------------------------------
@@ -17,11 +32,23 @@ use Illuminate\Http\Request;
 //    return $request->user();
 //});
 
+Route::group(['prefix' => 'geo-location'], function() {
+    Route::get('state', [StateController::class, 'get']);
+    Route::get('municipality/{stateId}', [MunicipalityController::class, 'get']);
+    Route::get('parish/{municipalityId}', [ParishController::class, 'get']);
+    Route::get('city/{municipalityId}', [CityController::class, 'get']);
+    Route::get('zone-type', [ZoneTypeController::class, 'get']);
+    Route::get('route-type', [RouteTypeController::class, 'get']);
+    Route::get('domicile-type', [DomicileTypeController::class, 'get']);
+    Route::get('{ids}', [GeoLocationController::class, 'get']);    
+});
+
+
 Route::group(['prefix' => 'common'], function() {
     Route::group(['prefix' => 'measure-unit'], function() {
-      Route::get('container', 'Modules\Common\Http\Controllers\MuContainerController@get');
-      //Route::get('type', 'MeasureUnit\MuMeasureUnitTypeController@get');
-      //Route::get('/{muMeasureUnitTypeId}', 'MeasureUnit\MuMeasureUnitController@get');    
+      Route::get('container', [MuContainerController::class, 'get']);      
+      Route::get('type', [MuMeasureUnitTypeController::class, 'get']);
+      Route::get('/{muMeasureUnitTypeId}',  [MuMeasureUnitController::class, 'get']);  
    });
 });
 
