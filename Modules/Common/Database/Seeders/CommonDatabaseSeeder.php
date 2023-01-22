@@ -18,10 +18,16 @@ class CommonDatabaseSeeder extends Seeder
 
         $this->call([
             //OthersTableSeeder:class,
+            StatesTableSeeder::class,
+            MunicipalitiesTableSeeder::class,
+            ParishesTableSeeder::class,
+            CitiesTableSeeder::class,
+            ZoneTypesTableSeeder::class,
+            RouteTypesTableSeeder::class,
+            DomicileTypesTableSeeder::class,
             MuContainerSeeder::class,
             MuMeasureUnitTypeSeeder::class,
             MuMeasureUnitSeeder::class
         ]);
     }
 }
-

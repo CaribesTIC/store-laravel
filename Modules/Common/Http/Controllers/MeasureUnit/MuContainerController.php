@@ -1,13 +1,10 @@
 <?php
 
-namespace Modules\Common\Http\Controllers;
-
+namespace Modules\Common\Http\Controllers\MeasureUnit;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
-//use App\MeasureUnit\MuContainer;
-use Modules\Common\Entities\MuContainer;
-
+use Modules\Common\Entities\MeasureUnit\MuContainer;
 
 class MuContainerController extends Controller
 {

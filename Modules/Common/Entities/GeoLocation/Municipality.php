@@ -1,11 +1,11 @@
 <?php
 
-namespace Modules\Common\Entities;
+namespace Modules\Common\Entities\GeoLocation;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class MuContainer extends Model
+class Municipality extends Model
 {
     use HasFactory;
     
@@ -15,6 +15,7 @@ class MuContainer extends Model
     
     protected static function newFactory()
     {
-        return \Modules\Common\Database\factories\MuContainerFactory::new();
+        return \Modules\Common\Database\factories\MunicipalityFactory::new();
     }
 }
+
