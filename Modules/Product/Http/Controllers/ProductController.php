@@ -2,59 +2,105 @@
 
 namespace Modules\Product\Http\Controllers;
 
-use Illuminate\Contracts\Support\Renderable;
+// use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Modules\Product\Entities\Product;
 
 class ProductController extends Controller
 {
+    public function get(Request $request)
+    {
+        return Product::get($request);
+    }
+
+    public function index()
+    {
+        $products = Product::get((object)['type'=>'list']);
+        return view('product.index', compact('products'));
+    }
+
+    public function create()
+    {
+        return view('product.create');
+    }
+
+    public function show(Product $product) { }
+
+    public function edit(Request $request)
+    {
+        //$product = Product::get((object)[
+        //    'type'=>'regist',
+        //    'value'=>$request->id
+        //]);
+        $prod = (object)['id' => $request->id ];
+        return view('product.edit', compact('prod'));
+    }
+
+    public function regist(Request $request)
+    {
+        return Product::regist($request);
+    }
+
+    public function destroy(Product $product) { }    
+    
+    public function photo(Request $request){
+        //$name = $request->photo->getClientOriginalName();
+        $ext = $request->photo->getClientOriginalExtension();
+        $name = 'productId_' . $request->productId;   
+        $request->photo->storeAs('public/product', $name . '.' . $ext); 
+        $product = Product::find($request->productId);
+        $product->photo = $name . '.' . $ext;
+        return $product->save();
+    }
+
     /**
      * Display a listing of the resource.
      * @return Renderable
      */
-    public function index()
-    {
-        return view('product::index');
-    }
+    //public function index()
+    //{
+    //    return view('product::index');
+    //}
 
     /**
      * Show the form for creating a new resource.
      * @return Renderable
      */
-    public function create()
-    {
-        return view('product::create');
-    }
+    //public function create()
+    //{
+    //    return view('product::create');
+    //}
 
     /**
      * Store a newly created resource in storage.
      * @param Request $request
      * @return Renderable
      */
-    public function store(Request $request)
-    {
+    //public function store(Request $request)
+    //{
         //
-    }
+    //}
 
     /**
      * Show the specified resource.
      * @param int $id
      * @return Renderable
      */
-    public function show($id)
-    {
-        return view('product::show');
-    }
+    //public function show($id)
+    //{
+    //    return view('product::show');
+    //}
 
     /**
      * Show the form for editing the specified resource.
      * @param int $id
      * @return Renderable
      */
-    public function edit($id)
-    {
-        return view('product::edit');
-    }
+    //public function edit($id)
+    //{
+    //    return view('product::edit');
+    //}
 
     /**
      * Update the specified resource in storage.
@@ -62,18 +108,18 @@ class ProductController extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+    //public function update(Request $request, $id)
+    //{
+    //    //
+    //}
 
     /**
      * Remove the specified resource from storage.
      * @param int $id
      * @return Renderable
      */
-    public function destroy($id)
-    {
-        //
-    }
+    //public function destroy($id)
+    //{
+    //    //
+    //}
 }
