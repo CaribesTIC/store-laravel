@@ -22,133 +22,133 @@ class MenuSeeder extends Seeder
             "icon" => "dashboard.svg",
             "sort" => 1
         ]);
-        
+
         Menu::create([ // id 2
-            "title" => "Message",
+            "title" => "Almacen",
             "menu_id" => null,
-            "path" => "message",
-            "icon" => "tasks.svg",
+            "path" => "#",
+            "icon" => "printer",
             "sort" => 2
         ]);
 
         Menu::create([ // id 3
-            "title" => "ShopCart",
-            "menu_id" => null,
-            "path" => "shopcart",
-            "icon" => "journals.svg",
-            "sort" => 3
+            "title" => "Entradas",
+            "menu_id" => 2,
+            "path" => "inputs",
+            "icon" => "inputs.svg",
+            "sort" => 1
         ]);
 
         Menu::create([ // id 4
-            "title" => "Registrar",
-            "menu_id" => null,
-            "path" => "#",
-            "icon" => "printer",
-            "sort" => 1
-        ]);
-    
-        Menu::create([ // id 5
-            "title" => "Users",
-            "menu_id" => 4,
-            "path" => "users",
-            "icon" => "users.svg",
-            "sort" => 1
+            "title" => "Salidas",
+            "menu_id" => 2,
+            "path" => "outputs",
+            "icon" => "outputs.svg",
+            "sort" => 2
         ]);
         
-        /*Menu::create([
-            "title" => "Clientes",
-            "menu_id" => 4,
-            "path" => "clients",
-            "icon" => "zones.svg",
-            "sort" => 2
-        ]);*/
-
-        /*Menu::create([
-            "title" => "Minutes",
-            "menu_id" => 4,
-            "path" => "minutes",
-            "icon" => "posts.svg",
+        Menu::create([ // id 5
+            "title" => "Reverso de Entradas",
+            "menu_id" => 2,
+            "path" => "input-reverses",
+            "icon" => "input-reverses.svg",
             "sort" => 3
-        ]);*/
+        ]);
 
         Menu::create([ // id 6
-            "title" => "Themes",
-            "menu_id" => null,
-            "path" => "#",
-            "icon" => "users.svg",
-            "sort" => 2
+            "title" => "Reverso de Salidas",
+            "menu_id" => 2,
+            "path" => "output-reverses",
+            "icon" => "output-reverses.svg",
+            "sort" => 4
         ]);
 
         Menu::create([ // id 7
-            "title" => "UI Elements",
-            "menu_id" => 6,
-            "path" => "ui-elements",
-            "icon" => "categories.svg",
-            "sort" => 1
-        ]);
-
-        Menu::create([ // id 8
-            "title" => "Tables",
-            "menu_id" => 6,
-            "path" => "tables",
-            "icon" => "dwelling-types.svg",
-            "sort" => 2
-        ]);
-
-        Menu::create([ // id 9
-            "title" => "Forms",
-            "menu_id" => 6,
-            "path" => "forms",
-            "icon" => "dashboard.svg",
+            "title" => "Inventario",
+            "menu_id" => null,
+            "path" => "#",
+            "icon" => "printer",
             "sort" => 3
         ]);
 
-        Menu::create([ // id 10
-            "title" => "Card",
-            "menu_id" => 6,
-            "path" => "card",
-            "icon" => "zones.svg",
+        Menu::create([ // id 8
+            "title" => "Movimiento",
+            "menu_id" => 7,
+            "path" => "movements",
+            "icon" => "movements.svg",
+            "sort" => 1
+        ]);
+
+        Menu::create([ // id 9
+            "title" => "Resumen",
+            "menu_id" => 7,
+            "path" => "summary",
+            "icon" => "summary.svg",
+            "sort" => 2
+        ]);
+
+       Menu::create([ // id 10
+            "title" => "Admin",
+            "menu_id" => null,
+            "path" => "#",
+            "icon" => "printer",
             "sort" => 4
         ]);
 
         Menu::create([ // id 11
-            "title" => "Modal",
-            "menu_id" => 6,
-            "path" => "modal",
-            "icon" => "posts.svg",
-            "sort" => 5
-        ]);
-
-        Menu::create([ // id 12
-            "title" => "Blank",
-            "menu_id" => 6,
-            "path" => "blank",
-            "icon" => "journals.svg",
-            "sort" => 6
-        ]);
-
-        Menu::create([ // id 13
-            "title" => "Development",
-            "menu_id" => null,
-            "path" => "#",
-            "icon" => "apple.svg",
-            "sort" => 6
-        ]);
-
-        Menu::create([ // id 14
             "title" => "Menus",
-            "menu_id" => 13,
+            "menu_id" => 10,
             "path" => "menus",
             "icon" => "menus.svg",
             "sort" => 1
         ]);
+        
+        Menu::create([ // id 12
+            "title" => "Artículos",
+            "menu_id" => 10,
+            "path" => "articles",
+            "icon" => "articles.svg",
+            "sort" => 2
+        ]);
+        
+        Menu::create([ // id 13
+            "title" => "Categorías",
+            "menu_id" => 10,
+            "path" => "categories",
+            "icon" => "categories.svg",
+            "sort" => 3
+        ]);
+
+        Menu::create([ // id 14
+            "title" => "Marcas",
+            "menu_id" => 10,
+            "path" => "marks",
+            "icon" => "mark.svg",
+            "sort" => 4
+        ]);
 
         Menu::create([ // id 15
+            "title" => "Productos",
+            "menu_id" => 10,
+            "path" => "products",
+            "icon" => "products.svg",
+            "sort" => 5
+        ]);
+
+        Menu::create([ // id 16
             "title" => "Roles",
-            "menu_id" => 13,
+            "menu_id" => 10,
             "path" => "roles",
             "icon" => "users.svg",
-            "sort" => 1
+            "sort" => 6
+        ]);
+        
+        Menu::create([ // id 17
+            "title" => "Users",
+            "menu_id" => 10,
+            "path" => "users",
+            "icon" => "user.svg",
+            "sort" => 7
         ]);
 
     }
