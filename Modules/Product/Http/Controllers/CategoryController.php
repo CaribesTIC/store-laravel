@@ -47,14 +47,17 @@ class CategoryController extends Controller
 
     public function regist(Request $request)
     {
+        //dd($request);
+    
         $request->id        = $request->id        ? $request->id        : 0;
         $request->parent_id = $request->parent_id ? $request->parent_id : 0;
         $response = Category::regist($request);
         if ($response[0]=='t')
             $msgType = 'success';
         elseif ($response[0]=='f')
-            $msgType = 'error';     
-        return redirect()->route('category.index')->with($msgType, $response[1]); 
+            $msgType = 'error';
+        return response()->json(["message" => $response[1]]);   
+        //return redirect()->route('category.index')->with($msgType, $response[1]); 
     }
 
     public function destroy($id)
@@ -63,8 +66,8 @@ class CategoryController extends Controller
         if ($response[0]=='t')
             $msgType = 'success';
         elseif ($response[0]=='f')
-            $msgType = 'error';       
-        return redirect()->route('category.index')->with($msgType, $response[1]);
+            $msgType = 'error';        
+        return response()->json(204);             
     }
 }
 

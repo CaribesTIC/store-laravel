@@ -13,7 +13,8 @@ class CreatePresentationRemovePl extends Migration
      */
     public function up()
     {
-        DB::unprepared("
+        DB::connection('pgsql_product')->unprepared("DROP FUNCTION public.presentation_remove(integer);");
+        DB::connection('pgsql_product')->unprepared("
 CREATE OR REPLACE FUNCTION public.presentation_remove(i_id integer)
   RETURNS character AS
 \$BODY\$
@@ -40,6 +41,6 @@ ALTER FUNCTION public.presentation_remove(integer)
      */
     public function down()
     {
-        DB::unprepared("DROP FUNCTION public.presentation_remove(integer);");
+        DB::connection('pgsql_product')->unprepared("DROP FUNCTION public.presentation_remove(integer);");
     }
 }
