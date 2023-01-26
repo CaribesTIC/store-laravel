@@ -13,7 +13,12 @@ class CreateProductRegisterPl extends Migration
      */
     public function up()
     {
-        DB::unprepared("
+    
+        DB::connection('pgsql_product')->unprepared(
+            "DROP FUNCTION public.product_register(integer, character varying, integer, integer, integer, integer, character varying, integer);"
+        );
+        
+        DB::connection('pgsql_product')->unprepared("
 CREATE OR REPLACE FUNCTION public.product_register(
     i_id integer,
     i_name character varying,
@@ -91,7 +96,7 @@ ALTER FUNCTION public.product_register(integer, character varying, integer, inte
      */
     public function down()
     {
-        DB::unprepared(
+        DB::connection('pgsql_product')->unprepared(
             "DROP FUNCTION public.product_register(integer, character varying, integer, integer, integer, integer, character varying, integer);"
         );
     }

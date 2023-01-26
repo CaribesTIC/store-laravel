@@ -12,8 +12,10 @@ class CreatePresentationRegisterPl extends Migration
      * @return void
      */
     public function up()
-    {        
-        DB::unprepared("        
+    {
+          DB::connection('pgsql_product')->unprepared("DROP FUNCTION public.presentation_register(integer, integer, jsonb, character varying, character varying, integer, integer, double precision, boolean, boolean, integer);");
+             
+        DB::connection('pgsql_product')->unprepared("        
 CREATE OR REPLACE FUNCTION public.presentation_register(
     i_id integer,
     i_product_id integer,    
@@ -98,6 +100,6 @@ CREATE OR REPLACE FUNCTION public.presentation_register(
      */
     public function down()
     {
-      DB::unprepared("DROP FUNCTION public.presentation_register(integer, integer, jsonb, character varying, character varying, integer, integer, double precision, boolean, boolean, integer);");
+      DB::connection('pgsql_product')->unprepared("DROP FUNCTION public.presentation_register(integer, integer, jsonb, character varying, character varying, integer, integer, double precision, boolean, boolean, integer);");
     }
 }

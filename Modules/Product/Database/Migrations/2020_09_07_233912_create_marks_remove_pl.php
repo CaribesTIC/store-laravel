@@ -13,7 +13,8 @@ class CreateMarksRemovePl extends Migration
      */
     public function up()
     {
-        DB::unprepared("
+        DB::connection('pgsql_product')->unprepared("DROP FUNCTION public.mark_remove(integer);");
+        DB::connection('pgsql_product')->unprepared("
 CREATE OR REPLACE FUNCTION public.mark_remove(i_id integer)
   RETURNS json AS
 \$BODY\$
@@ -47,6 +48,6 @@ ALTER FUNCTION public.mark_remove(integer)
      */
     public function down()
     {
-        DB::unprepared("DROP FUNCTION public.mark_remove(integer);");
+        DB::connection('pgsql_product')->unprepared("DROP FUNCTION public.mark_remove(integer);");
     }
 }

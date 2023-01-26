@@ -76,7 +76,7 @@ class Category extends Model
 
     static public function regist($request)
     {    
-        $categories = DB::select('SELECT category_register( :id, :parent_id, :name )', [
+        $categories = DB::connection('pgsql_product')->select('SELECT category_register( :id, :parent_id, :name )', [
           'id'        => $request->id,
           'parent_id' => $request->parent_id,
           'name'      => $request->name
@@ -86,7 +86,7 @@ class Category extends Model
     
     static public function remove($id)
     {
-        $categories = DB::select('SELECT public.category_remove(:id)', ['id' => $id]);
+        $categories = DB::connection('pgsql_product')->select('SELECT public.category_remove(:id)', ['id' => $id]);
         return json_decode($categories[0]->category_remove);
     }
 
