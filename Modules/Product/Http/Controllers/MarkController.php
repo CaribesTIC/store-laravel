@@ -4,11 +4,28 @@ namespace Modules\Product\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Modules\Product\Entities\Mark;
+// use Modules\Product\Entities\Mark;
+use Modules\Product\Http\Services\Mark\IndexMarkService;
+use Illuminate\Http\JsonResponse;
 
 class MarkController extends Controller
 {
-    public function index()
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function index(Request $request): JsonResponse
+    {
+        //if (Auth::user()->isAdmin()) {
+            return IndexMarkService::execute($request);            
+        //}
+        //return  response()->json(["message" => "Forbidden"], 403);
+    }
+    
+ /*   public function index()
     {
         $marks = Mark::get((object)['type'=>'list']);
         return view('mark.index', compact('marks'));
@@ -61,5 +78,5 @@ class MarkController extends Controller
         elseif ($response[0]=='f')
             $msgType = 'error';       
         return redirect()->route('mark.index')->with($msgType, $response[1]);
-    }
+    }*/
 }
