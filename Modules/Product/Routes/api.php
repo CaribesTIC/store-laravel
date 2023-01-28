@@ -30,7 +30,8 @@ Route::post('/category/regist', [CategoryController::class, 'regist']);
 Route::delete('/category/remove/{id}', [CategoryController::class, 'destroy']);
 
 Route::prefix('marks')->group(function () {
-  Route::get('/', [MarkController::class, 'index']);
+  Route::get('/', [MarkController::class, 'index']);  
+  Route::get('/{mark}', [MarkController::class, 'show']);
 });
 // Route::get('/mark/get/{type}/{value?}', [MarkController::class, 'get']);
 //Route::post('/mark/regist', [MarkController::class, 'regist']);
