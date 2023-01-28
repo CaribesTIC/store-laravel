@@ -52,10 +52,6 @@ class IndexMarkService
             "direction" => $request->query("direction"),
             "search" => $request->query("search")
         ]);
-        // return response(User::paginate(5));             
-        // return response()->json(User::paginate(5)); 
-        // return UserResource::collection(User::paginate(5));
-        // return new UserCollection(User::paginate(5));
     }
 
 }

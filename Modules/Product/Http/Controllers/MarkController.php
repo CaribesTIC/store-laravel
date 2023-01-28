@@ -6,9 +6,17 @@ use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
 use Modules\Product\Entities\Mark;
-use Modules\Product\Http\Services\Mark\IndexMarkService;
+use Modules\Product\Http\Services\Mark\{
+    IndexMarkService,
+    StoreMarkService,
+    UpdateMarkService
+};
+use Modules\Product\Http\Requests\Mark\{
+    StoreMarkRequest,
+    UpdateMarkRequest
+    
+};
 use Modules\Product\Http\Resources\MarkResource;
-
 
 class MarkController extends Controller
 {
@@ -28,6 +36,20 @@ class MarkController extends Controller
     }
 
     /**
+     * Store a newly created resource in storage.
+     *
+     * @param  Modules\Product\Http\Requests\Mark\StoreMarkRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */ 
+    public function store(StoreMarkRequest $request): JsonResponse
+    {
+        //if (Auth::user()->isAdmin()) {
+            return StoreMarkService::execute($request);
+        //}
+        //return  response()->json(["message" => "Forbidden"], 403);
+    }
+
+    /**
      * Display the specified resource.
      *
      * @param  int  $id
@@ -41,58 +63,34 @@ class MarkController extends Controller
         //return  response()->json(["message" => "Forbidden"], 403);
     }
     
- /*   public function index()
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  Modules\Product\Http\Requests\Mark\UpdateMarkRequest $request
+     * @param  Modules\Product\Entities\Mark; $mark
+     * @return \Illuminate\Http\JsonResponse
+     */     
+    public function update(UpdateMarkRequest $request, Mark $mark): JsonResponse
     {
-        $marks = Mark::get((object)['type'=>'list']);
-        return view('mark.index', compact('marks'));
+        //if (Auth::user()->isAdmin()) {
+            return UpdateMarkService::execute($request, $mark);
+        //}
+        //return  response()->json(["message" => "Forbidden"], 403);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function destroy(Request $request): JsonResponse
+    {      
+        //if (Auth::user()->isAdmin()) {
+            Mark::destroy($request->id);
+            return response()->json(204);            
+        //}
+        return  response()->json(["message" => "Forbidden"], 403);
     }
     
-    public function get(Request $request)
-    {
-        return Mark::get($request);
-    }
-
-    public function create()
-    {        
-        $select = (object)['display' => true]; 
-        return view('mark.create', compact('select'));
-    }
-     
-    public function show(Request $request, $id)
-    {
-        $request->type = 'regist';
-        $request->value = $id;                  
-        $mark = json_decode(Mark::get($request));              
-        return view('mark.show', compact('mark'));
-    }
-
-    public function edit(Request $request, $id)
-    {        
-        $request->type = 'regist';
-        $request->value = $id;                  
-        $mark = json_decode(Mark::get($request));              
-        return view('mark.edit', compact('mark'));
-    }   
-
-    public function regist(Request $request)
-    {
-        $request->id          = $request->id          ? $request->id          : 0;
-        $request->producer_id = $request->producer_id ? $request->producer_id : 1;        
-        $response = Mark::regist($request);        
-        if ($response[0]=='t')
-            $msgType = 'success';
-        elseif ($response[0]=='f')
-            $msgType = 'error';     
-        return redirect()->route('mark.index')->with($msgType, $response[1]);        
-    }
-
-    public function destroy($id)
-    {
-        $response = Mark::remove($id);
-        if ($response[0]=='t')
-            $msgType = 'success';
-        elseif ($response[0]=='f')
-            $msgType = 'error';       
-        return redirect()->route('mark.index')->with($msgType, $response[1]);
-    }*/
 }

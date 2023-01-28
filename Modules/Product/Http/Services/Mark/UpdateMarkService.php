@@ -1,26 +1,22 @@
 <?php
-namespace App\Http\Services\User;
+namespace Modules\Product\Http\Services\Mark;
 
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\JsonResponse;
-use App\Http\Requests\User\UpdateUserRequest;
-use App\Models\User;
+use Modules\Product\Entities\Mark;
+use Modules\Product\Http\Requests\Mark\UpdateMarkRequest;
 
 
-class UpdateUserService
+
+class UpdateMarkService
 {
-    static public function execute(UpdateUserRequest $request, User $user) : JsonResponse
+    static public function execute(UpdateMarkRequest $request, Mark $mark) : JsonResponse
     {
         $data = $request->all();
 
-        if (isset($data["password"]) && $data["password"]) {
-            $data["password"] = Hash::make($data["password"]);
-        } else {
-            unset($data["password"]);
-        }
+        $mark->update( $request->except( '_method' ) );
             
-        $user->update($data);
+        
 
-        return response()->json(["message"=> "Usuario actualizado"], 200);      
+        return response()->json(["message"=> "Marca actualizado"], 200);      
     }
 }

@@ -1,23 +1,20 @@
 <?php
-namespace App\Http\Services\User;
+namespace Modules\Product\Http\Services\Mark;
 
-use Illuminate\Support\Facades\Hash;
-use App\Http\Requests\User\StoreUserRequest;
-use App\Models\User;
+use Illuminate\Http\JsonResponse;
+use Modules\Product\Entities\Mark;
+use Modules\Product\Http\Requests\Mark\StoreMarkRequest;
 
-class StoreUserService
+class StoreMarkService
 {
   
-    static public function execute(StoreUserRequest $request): \Illuminate\Http\JsonResponse
+    static public function execute(StoreMarkRequest $request): JsonResponse
     {     
-        $user = new User();
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = Hash::make($request->password);
-        $user->role_id = $request->role_id;
-        $user->save();
+        $mark = new Mark();
+        $mark->name = $request->name;        
+        $mark->save();
 
-        return response()->json(["message"=> "Usuario creado"], 201);
+        return response()->json(["message"=> "Marca creada"], 201);
     }
 
 }
