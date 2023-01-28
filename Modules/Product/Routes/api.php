@@ -29,9 +29,12 @@ Route::get('/category/get/{type}/{value?}', [CategoryController::class, 'get']);
 Route::post('/category/regist', [CategoryController::class, 'regist']);
 Route::delete('/category/remove/{id}', [CategoryController::class, 'destroy']);
 
-Route::get('/mark/get/{type}/{value?}', [MarkController::class, 'get']);
-Route::post('/mark/regist', [MarkController::class, 'regist']);
-Route::delete('/mark/remove/{id}', [MarkController::class, 'destroy']);
+Route::prefix('marks')->group(function () {
+  Route::get('/', [MarkController::class, 'index']);
+});
+// Route::get('/mark/get/{type}/{value?}', [MarkController::class, 'get']);
+//Route::post('/mark/regist', [MarkController::class, 'regist']);
+//Route::delete('/mark/remove/{id}', [MarkController::class, 'destroy']);
 
 Route::get('/product/get/{type}/{value0?}/{value1?}', [ProductController::class, 'get']);
 Route::post('/product/regist', [ProductController::class, 'regist']);

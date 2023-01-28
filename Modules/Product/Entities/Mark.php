@@ -19,7 +19,7 @@ class Mark extends Model
         return \Modules\Product\Database\factories\MarkFactory::new();
     }
 
-    private static function replaceData($request, $string)
+    /*private static function replaceData($request, $string)
     {
         if (!empty($string) && !empty($request)) {
             foreach ($request as $campo => $valor) {
@@ -46,7 +46,7 @@ class Mark extends Model
               break;
       }
       $sql = self::replaceData($arr, $sql);
-      $return = DB::select($sql, $params);
+      $return = DB::connection('pgsql_product')->select($sql, $params);
       return $request->type==="regist" ? json_encode($return[0]) : $return;
     }
 
@@ -64,6 +64,6 @@ class Mark extends Model
     {
         $marks = DB::select('SELECT public.mark_remove(:id)', ['id' => $id]);
         return json_decode($marks[0]->mark_remove);
-    }
+    }*/
 
 }
