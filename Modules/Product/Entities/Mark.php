@@ -12,7 +12,7 @@ class Mark extends Model
     
     protected $connection = 'pgsql_product';
 
-    protected $fillable = [];
+    protected $fillable = ['name'];
     
     protected static function newFactory()
     {
