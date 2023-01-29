@@ -2,14 +2,40 @@
 
 namespace Modules\Product\Http\Controllers;
 
-// use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
 use Modules\Product\Entities\Product;
+use Modules\Product\Http\Services\Product\{
+    IndexProductService,
+    StoreProductService,
+    UpdateProductService
+};
+use Modules\Product\Http\Requests\Product\{
+    StoreProductRequest,
+    UpdateProductRequest
+    
+};
+use Modules\Product\Http\Resources\ProductResource;
 
 class ProductController extends Controller
 {
-    public function get(Request $request)
+    /**
+     * Display a listing of the resource.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function index(Request $request): JsonResponse
+    {
+        //if (Auth::user()->isAdmin()) {
+            return IndexProductService::execute($request);            
+        //}
+        //return  response()->json(["message" => "Forbidden"], 403);
+    }
+
+
+    /*public function get(Request $request)
     {
         return Product::get($request);
     }
@@ -52,7 +78,14 @@ class ProductController extends Controller
         $product = Product::find($request->productId);
         $product->photo = $name . '.' . $ext;
         return $product->save();
-    }
+    }*/
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
      * Display a listing of the resource.
