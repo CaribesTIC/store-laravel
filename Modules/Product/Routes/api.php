@@ -37,10 +37,19 @@ Route::prefix('marks')->group(function () {
   Route::delete('/{id}', [MarkController::class,'destroy']);
 });
 
-Route::get('/product/get/{type}/{value0?}/{value1?}', [ProductController::class, 'get']);
+Route::prefix('products')->group(function () {
+  Route::get('/', [ProductController::class, 'index']);  
+  Route::get('/{product}', [ProductController::class, 'show']);
+  Route::post('/', [ProductController::class, 'store']);
+  Route::put('/{product}', [ProductController::class, 'update']);
+  Route::delete('/{id}', [ProductController::class,'destroy']);
+});
+
+/*Route::get('/product/get/{type}/{value0?}/{value1?}', [ProductController::class, 'get']);
 Route::post('/product/regist', [ProductController::class, 'regist']);
 Route::post('/product/photo', [ProductController::class, 'photo']);
 //Route::delete('/product/remove/{id}', [ProductController::class, 'destroy']);
+*/
 
 Route::get('/presentation/{type}/{value0?}/{value1?}', [PresentationController::class, 'get']);
 Route::post('/presentation/regist', [PresentationController::class, 'regist']);
