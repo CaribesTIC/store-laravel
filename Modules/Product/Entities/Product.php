@@ -18,6 +18,22 @@ class Product extends Model
     protected static function newFactory()
     {
         return \Modules\Product\Database\factories\ProductFactory::new();
+    }    
+    
+    /**
+     * Get the category for the product.
+     */
+    public function category()
+    {        
+        return $this->belongsTo(\Modules\Product\Entities\Category::class);
+    }
+
+    /**
+     * Get the mark for the product.
+     */
+    public function mark()
+    {        
+        return $this->belongsTo(\Modules\Product\Entities\mark::class);
     }
 
     private static function replaceData($request, $string)
