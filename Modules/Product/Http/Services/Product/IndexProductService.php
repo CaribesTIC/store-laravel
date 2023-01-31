@@ -19,8 +19,16 @@ class IndexProductService
      */
     static public function execute(Request $request): JsonResponse
     {          
-        // Initialize query 
-        $query = Product::query();
+        // Initialize query          
+        $query = Product::query()
+            ->select(
+                "products.id",
+                "products.name as product",
+                "view_categories.family as category",
+                "marks.name as mark"
+            )       
+            ->join("view_categories", "view_categories.id", "=", "products.category_id")     
+            ->join("marks", "marks.id", "=", "products.mark_id");
 
         // search 
         $search = $request->input("search");
