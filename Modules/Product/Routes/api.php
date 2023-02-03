@@ -25,9 +25,11 @@ use Modules\Product\Http\Controllers\{
 });*/
 
 
-Route::get('/category/get/{type}/{value?}', [CategoryController::class, 'get']);
-Route::post('/category/regist', [CategoryController::class, 'regist']);
-Route::delete('/category/remove/{id}', [CategoryController::class, 'destroy']);
+Route::prefix('category')->group(function () {
+    Route::get('/get/{type}/{value?}', [CategoryController::class, 'get']);
+    Route::post('/regist', [CategoryController::class, 'regist']);
+    Route::delete('/remove/{id}', [CategoryController::class, 'destroy']);
+});
 
 Route::prefix('marks')->group(function () {
   Route::get('/', [MarkController::class, 'index']);  
