@@ -34,6 +34,10 @@ class ProductController extends Controller
         //return  response()->json(["message" => "Forbidden"], 403);
     }
 
+    public function show(Product $product) {
+        return response()->json($product, 200);
+    }
+
 
     /*public function get(Request $request)
     {
