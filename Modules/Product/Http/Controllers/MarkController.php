@@ -36,6 +36,20 @@ class MarkController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function list(Request $request): JsonResponse
+    {
+        //if (Auth::user()->isAdmin()) {
+            return response()->json(Mark::all());            
+        //}
+        //return  response()->json(["message" => "Forbidden"], 403);
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  Modules\Product\Http\Requests\Mark\StoreMarkRequest $request

@@ -32,7 +32,8 @@ Route::prefix('category')->group(function () {
 });
 
 Route::prefix('marks')->group(function () {
-  Route::get('/', [MarkController::class, 'index']);  
+  Route::get('/', [MarkController::class, 'index']);
+  Route::get('/list', [MarkController::class, 'list']);
   Route::get('/{mark}', [MarkController::class, 'show']);
   Route::post('/', [MarkController::class, 'store']);
   Route::put('/{mark}', [MarkController::class, 'update']);
