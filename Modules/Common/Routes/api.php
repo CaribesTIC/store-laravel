@@ -46,7 +46,7 @@ Route::group(['prefix' => 'geo-location'], function() {
 
 Route::group(['prefix' => 'common'], function() {
     Route::group(['prefix' => 'measure-unit'], function() {
-      Route::get('container', [MuContainerController::class, 'get']);      
+      Route::get('containers', [MuContainerController::class, 'get']);      
       Route::get('type', [MuMeasureUnitTypeController::class, 'get']);
       Route::get('/{muMeasureUnitTypeId}',  [MuMeasureUnitController::class, 'get']);  
    });
