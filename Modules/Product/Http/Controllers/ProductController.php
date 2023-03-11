@@ -38,6 +38,16 @@ class ProductController extends Controller
         return response()->json($product, 200);
     }
 
+    public function update(Request $request, Product $product): JsonResponse
+    {         
+        dd(["request"=> $request, "product" => $product]);
+        
+        //if (Auth::user()->isAdmin()) {
+            return UpdateProductService::execute($request, $product);
+        //}
+        //return  response()->json(["message" => "Forbidden"], 403);
+
+    }
 
     /*public function get(Request $request)
     {
