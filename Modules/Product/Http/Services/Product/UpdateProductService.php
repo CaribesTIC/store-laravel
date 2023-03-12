@@ -9,9 +9,9 @@ use Modules\Product\Http\Requests\Product\UpdateProductRequest;
 
 class UpdateProductService
 {
-    static public function execute(UpdateProductRequest $request, Product $product) : JsonResponse
+    static public function execute(UpdateProductRequest $request, Product $product) : JsonResponse           
     {
-        $data = $request->all();
+        //$data = $request->all();
 
         $product->update( $request->except( '_method' ) );
 
