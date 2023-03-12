@@ -51,7 +51,7 @@ class IndexProductService
 
         // get paginated results 
         $products = $query
-            ->paginate(5)
+            ->paginate(10)
             ->appends(request()->query());
 
         return response()->json([

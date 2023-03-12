@@ -12,8 +12,15 @@ class Product extends Model
 
     protected $connection = 'pgsql_product';
 
-    // protected $fillable = [];
-    protected $fillable = ['photo'];
+    protected $fillable = [
+        'company_id',
+        'name',
+        'category_id',
+        'mark_id',
+        'measure_unit_type_id',
+        'measure_unit_id',        
+        'photo'
+    ];
     
     protected static function newFactory()
     {
