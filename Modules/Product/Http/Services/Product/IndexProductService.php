@@ -24,8 +24,8 @@ class IndexProductService
             ->select(
                 "products.id",
                 "products.name as product",
-                "view_categories.family as category",
-                "marks.name as mark"
+                "marks.name as mark",
+                "view_categories.family as category"
             )       
             ->join("view_categories", "view_categories.id", "=", "products.category_id")     
             ->join("marks", "marks.id", "=", "products.mark_id");
@@ -35,23 +35,21 @@ class IndexProductService
         if ($search) {
             $query->where(function ($query) use ($search) {
                 $query
-                    ->where("name", "like", "%$search%");
+                    ->where("products.name", "like", "%$search%");
                     //->orWhere("email", "like", "%$search%");
             });
         }
 
         // sort 
         $sort = $request->input("sort");
-        $direction = $request->input("direction") == "desc" ? "desc" : "asc";
-        
-        //if ($sort) { $query->orderBy($sort, $direction); } 
-        if ($sort) {
-            $query->orderBy($sort, $direction);
-        }
+        $direction = $request->input("direction") === "desc" ? "desc" : "asc";        
+        ($sort)
+            ? $query->orderBy($sort, $direction) 
+                : $query->orderBy("product", "asc");
 
         // get paginated results 
         $products = $query
-            ->paginate(10)
+            ->paginate(5)
             ->appends(request()->query());
 
         return response()->json([
