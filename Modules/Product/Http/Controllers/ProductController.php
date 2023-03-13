@@ -54,6 +54,15 @@ class ProductController extends Controller
         //return  response()->json(["message" => "Forbidden"], 403);
     }
 
+    public function destroy(Request $request): JsonResponse
+    {      
+        //if (Auth::user()->isAdmin()) {
+            Product::destroy($request->id);
+            return response()->json(204);            
+        //}
+        return  response()->json(["message" => "Forbidden"], 403);
+    }
+
     /*public function get(Request $request)
     {
         return Product::get($request);
