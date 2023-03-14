@@ -28,7 +28,8 @@ class UpdateProductRequest extends FormRequest
             "category_id" => ["required"],
             "mark_id" => ["required"],     
             "measure_unit_type_id" => ["required"],
-            "measure_unit_id" => ["required"] 
+            "measure_unit_id" => ["required"],
+            "name" => ["required"]
         ];
     }
 }
