@@ -61,7 +61,7 @@ return [
     |
     */
 
-    //'home' => RouteServiceProvider::HOME,    
+    //'home' => RouteServiceProvider::HOME,
     'home' => env('SPA_URL') . '/dashboard',
 
     /*
@@ -139,7 +139,9 @@ return [
         Features::updateProfileInformation(),
         Features::updatePasswords(),
         Features::twoFactorAuthentication([
+            'confirm' => true,
             'confirmPassword' => true,
+            // 'window' => 0,
         ]),
     ],
 
