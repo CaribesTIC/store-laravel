@@ -16,7 +16,17 @@ class CreateCategoriesTable extends Migration
         Schema::connection('pgsql_product')->dropIfExists('presentations');
         Schema::connection('pgsql_product')->dropIfExists('products');
         Schema::connection('pgsql_product')->dropIfExists('marks');
-        DB::connection('pgsql_product')->unprepared("DROP VIEW public.view_categories;");
+        
+        $retult = DB::connection('pgsql_product')->select("SELECT EXISTS (
+            SELECT FROM information_schema.tables 
+            WHERE  table_schema = 'public'
+            AND    table_name   = 'view_categories'
+         );")[0];
+
+        if ($retult->exists){
+          DB::connection('pgsql_product')->unprepared("DROP VIEW public.view_categories;");
+          
+        }
         Schema::connection('pgsql_product')->dropIfExists('categories');
         Schema::connection('pgsql_product')->create('categories', function (Blueprint $table) {
             $table->increments('id');
@@ -35,10 +45,11 @@ class CreateCategoriesTable extends Migration
      */
     public function down()
     {
-        Schema::connection('pgsql_product')->dropIfExists('presentations');
+        /*Schema::connection('pgsql_product')->dropIfExists('presentations');
         Schema::connection('pgsql_product')->dropIfExists('products');
         Schema::connection('pgsql_product')->dropIfExists('marks');
         DB::connection('pgsql_product')->unprepared("DROP VIEW public.view_categories;");
         Schema::connection('pgsql_product')->dropIfExists('categories');
+        */
     }
 }

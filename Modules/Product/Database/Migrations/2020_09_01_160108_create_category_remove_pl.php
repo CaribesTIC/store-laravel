@@ -13,7 +13,7 @@ class CreateCategoryRemovePl extends Migration
      */
     public function up()
     {
-        DB::connection('pgsql_product')->unprepared("DROP FUNCTION public.category_remove(integer);");
+        //DB::connection('pgsql_product')->unprepared("DROP FUNCTION public.category_remove(integer);");
         DB::connection('pgsql_product')->unprepared("        
   CREATE OR REPLACE FUNCTION public.category_remove(i_id integer)
   RETURNS json AS
@@ -49,6 +49,6 @@ class CreateCategoryRemovePl extends Migration
      */
     public function down()
     {
-        DB::connection('pgsql_product')->unprepared("DROP FUNCTION public.category_remove(integer);");
+        //DB::connection('pgsql_product')->unprepared("DROP FUNCTION public.category_remove(integer);");
     }
 }

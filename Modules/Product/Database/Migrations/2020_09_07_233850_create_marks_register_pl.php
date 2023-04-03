@@ -13,7 +13,7 @@ class CreateMarksRegisterPl extends Migration
      */
     public function up()
     {
-        DB::connection('pgsql_product')->unprepared("DROP FUNCTION public.mark_register(integer, character varying, integer);");
+        //DB::connection('pgsql_product')->unprepared("DROP FUNCTION public.mark_register(integer, character varying, integer);");
         DB::connection('pgsql_product')->unprepared("
   CREATE OR REPLACE FUNCTION public.mark_register(
     i_id integer,
@@ -72,6 +72,6 @@ ALTER FUNCTION public.mark_register(integer, character varying, integer)
      */
     public function down()
     {
-        DB::connection('pgsql_product')->unprepared("DROP FUNCTION public.mark_register(integer, character varying, integer);");
+        //DB::connection('pgsql_product')->unprepared("DROP FUNCTION public.mark_register(integer, character varying, integer);");
     }
 }

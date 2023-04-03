@@ -12,7 +12,7 @@ class CreateCategoryRegisterPl extends Migration
      * @return void
      */
     public function up()
-    {   DB::connection('pgsql_product')->unprepared("DROP FUNCTION public.category_register(integer, integer, character varying);");
+    {   //DB::connection('pgsql_product')->unprepared("DROP FUNCTION public.category_register(integer, integer, character varying);");
         DB::connection('pgsql_product')->unprepared("  
   CREATE OR REPLACE FUNCTION public.category_register(
     i_id integer,
@@ -72,7 +72,7 @@ class CreateCategoryRegisterPl extends Migration
      */
     public function down()
     {
-         DB::connection('pgsql_product')->unprepared("DROP FUNCTION public.category_register(integer, integer, character varying);");
+         //DB::connection('pgsql_product')->unprepared("DROP FUNCTION public.category_register(integer, integer, character varying);");
     }
 }
 
