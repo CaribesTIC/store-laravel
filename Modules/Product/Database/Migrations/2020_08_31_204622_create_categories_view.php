@@ -56,6 +56,6 @@ class CreateCategoriesView extends Migration
      */
     public function down()
     {
-        DB::connection('pgsql_product')->unprepared("DROP VIEW public.view_categories;");
+        //DB::connection('pgsql_product')->unprepared("DROP VIEW public.view_categories;");
     }
 }
