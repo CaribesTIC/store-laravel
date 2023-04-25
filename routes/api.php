@@ -58,3 +58,20 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::delete('/{id}', [RoleController::class,'destroy']);        
     });    
 });
+
+Route::prefix('error')->group(function () {
+    Route::get('/not-auth', function(){        
+        abort(403, 'This action is not authorized.');        
+    });
+
+    Route::get('/not-found', function(){        
+        abort(404, 'Page not found.');        
+    });
+
+    Route::get('/', function(){        
+        abort(500, 'Something went wrong');        
+    });
+    Route::get('/custom', function(){
+        throw new \App\Exceptions\CustomException('Error: Levi Strauss & CO.', 501);
+    });
+});
