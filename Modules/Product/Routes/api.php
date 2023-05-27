@@ -49,7 +49,7 @@ Route::prefix('products')->group(function () {
 });
 
 Route::prefix('presentations')->group(function () {
-  Route::get('/', [PresentationController::class, 'index']);  
+  Route::get('/{productId}', [PresentationController::class, 'get']);  
   Route::get('/{presentation}', [PresentationController::class, 'show']);
   Route::post('/', [PresentationController::class, 'store']);
   Route::put('/{presentation}', [PresentationController::class, 'update']);
