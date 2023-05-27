@@ -15,24 +15,21 @@ use Modules\Product\Http\Requests\Presentation\{
     StorePresentationRequest
     //UpdatePresentationRequest    
 };
+use Illuminate\Support\Facades\DB;
 
 class PresentationController extends Controller
 {
-
-    public function get(Request $request)
-    {
-        return Presentation::get($request);
-    }
-
     /**
-     * Display a listing of the resource.
+     * Display a listing of the resource by parent.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function get(Request $request)
     {
-        //
+        return Presentation::select(DB::raw("* ,presentation_deploy(presentations.id) as packing_deployed"))->where("product_id", $request->productId)->get();
     }
+
+
 
 
     /**
