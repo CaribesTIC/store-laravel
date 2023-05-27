@@ -3,8 +3,18 @@
 namespace Modules\Product\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
 use Modules\Product\Entities\Presentation;
+use Modules\Product\Http\Services\Presentation\{
+    //IndexPresentationService,
+    StorePresentationService
+    //UpdateProductService
+};
+use Modules\Product\Http\Requests\Presentation\{
+    StorePresentationRequest
+    //UpdatePresentationRequest    
+};
 
 class PresentationController extends Controller
 {
@@ -24,26 +34,16 @@ class PresentationController extends Controller
         //
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+     */    
+    public function store(StorePresentationRequest $request): JsonResponse
+    {    
+        return StorePresentationService::execute($request);
     }
+    
+    
 
     /**
      * Display the specified resource.

@@ -19,7 +19,8 @@ class StoreProductService
         $product->measure_unit_id = $request->measure_unit_id;
         $product->measure_unit = $request->measure_unit;
         
-        $product->save();       
+        $product->save();
+        $product->refresh();     
 
         return response()->json([
             'message' => 'Producto creado',
