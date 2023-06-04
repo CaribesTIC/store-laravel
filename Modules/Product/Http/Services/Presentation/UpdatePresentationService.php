@@ -3,15 +3,13 @@ namespace Modules\Product\Http\Services\Presentation;
 
 use Illuminate\Http\JsonResponse;
 use Modules\Product\Entities\Presentation;
-use Modules\Product\Http\Requests\Presentation\StorePresentationRequest;
+use Modules\Product\Http\Requests\Presentation\UpdatePresentationRequest;
 
-class StorePresentationService
+class UpdatePresentationService
 {
   
-    static public function execute(StorePresentationRequest $request): JsonResponse
+    static public function execute(UpdatePresentationRequest $request, Presentation $presentation): JsonResponse
     {     
-        $presentation = new Presentation();
-
         $presentation->product_id = $request->product_id;
         $presentation->sale_type = $request->sale_type;
         $presentation->int_cod = $request->int_cod;
@@ -20,17 +18,15 @@ class StorePresentationService
         // $presentation->packing_json = $request->packing_json;
         $presentation->packing = $request->packing_json;
         $presentation->price = $request->price;
-        $presentation->stock_min = $request->stock_min;
         $presentation->stock_max = $request->stock_max;
+        $presentation->stock_min = $request->stock_min;
         $presentation->status = $request->status;
         
-        $presentation->save();
-        $presentation->refresh();
+        $presentation->save();        
 
         return response()->json([
-            'message' => 'Presentación creada',
-            'presentation_id' => $presentation->id
-        ], 201);
+            'message' => 'Presentación actualizada'            
+        ], 200);
     }
 
 }

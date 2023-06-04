@@ -5,32 +5,32 @@ namespace Modules\Product\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\DB;
 use Modules\Product\Entities\Presentation;
+use Modules\Product\Http\Requests\Presentation\{
+    StorePresentationRequest,
+    UpdatePresentationRequest    
+};
 use Modules\Product\Http\Services\Presentation\{
     //IndexPresentationService,
-    StorePresentationService
-    //UpdateProductService
-};
-use Modules\Product\Http\Requests\Presentation\{
-    StorePresentationRequest
-    //UpdatePresentationRequest    
-};
-use Illuminate\Support\Facades\DB;
+    StorePresentationService,
+    UpdatePresentationService
+}; 
 
 class PresentationController extends Controller
 {
     /**
      * Display a listing of the resource by parent.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function get(Request $request)
+    public function get(Request $request): Collection
     {
-        return Presentation::select(DB::raw("* ,presentation_deploy(presentations.id) as packing_deployed"))->where("product_id", $request->productId)->get();
+        return Presentation::select(
+            DB::raw("* ,presentation_deploy(presentations.id) as packing_deployed")
+        )
+        ->where("product_id", $request->productId)
+        ->get();
     }
-
-
-
 
     /**
      * Store a newly created resource in storage.
@@ -40,7 +40,13 @@ class PresentationController extends Controller
         return StorePresentationService::execute($request);
     }
     
-    
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(UpdatePresentationRequest $request, Presentation $presentation): JsonResponse
+    {
+        return UpdatePresentationService::execute($request, $presentation);
+    }
 
     /**
      * Display the specified resource.
@@ -60,18 +66,6 @@ class PresentationController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit(Presentation $presentation)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Presentation  $presentation
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Presentation $presentation)
     {
         //
     }
