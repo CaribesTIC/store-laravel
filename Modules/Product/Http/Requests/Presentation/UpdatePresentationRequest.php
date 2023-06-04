@@ -5,7 +5,7 @@ namespace Modules\Product\Http\Requests\Presentation;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class StorePresentationRequest extends FormRequest
+class UpdatePresentationRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -19,10 +19,12 @@ class StorePresentationRequest extends FormRequest
 
     /**
      * Get the validation rules that apply to the request.
+     *
+     * @return array
      */
     public function rules(): Array
     {
-        return [        
+        return [
            "product_id" => ["required"],
             //"sale_type" => ["required"],
             "int_cod" => ["required"],     
