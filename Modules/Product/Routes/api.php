@@ -49,7 +49,7 @@ Route::prefix('products')->group(function () {
 });
 
 Route::prefix('presentations')->group(function () {
-  Route::get('/{productId}', [PresentationController::class, 'get']);  
+  Route::get('/{productId}', [PresentationController::class, 'getAllByProduct']);  
   Route::get('/{presentation}', [PresentationController::class, 'show']);
   Route::post('/', [PresentationController::class, 'store']);
   Route::put('/{presentation}', [PresentationController::class, 'update']);
@@ -62,6 +62,6 @@ Route::post('/product/photo', [ProductController::class, 'photo']);
 //Route::delete('/product/remove/{id}', [ProductController::class, 'destroy']);
 */
 
-Route::get('/presentation/{type}/{value0?}/{value1?}', [PresentationController::class, 'get']);
-Route::post('/presentation/regist', [PresentationController::class, 'regist']);
-Route::delete('/presentation/remove/{id}', [PresentationController::class, 'destroy']);
+//Route::get('/presentation/{type}/{value0?}/{value1?}', [PresentationController::class, 'get']);
+//Route::post('/presentation/regist', [PresentationController::class, 'regist']);
+//Route::delete('/presentation/remove/{id}', [PresentationController::class, 'destroy']);

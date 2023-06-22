@@ -23,7 +23,7 @@ class PresentationController extends Controller
     /**
      * Display a listing of the resource by parent.
      */
-    public function get(Request $request): Collection
+    public function getAllByProduct(Request $request): Collection
     {
         return Presentation::select(
             DB::raw("* ,presentation_deploy(presentations.id) as packing_deployed")
@@ -49,40 +49,12 @@ class PresentationController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Presentation  $presentation
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Presentation $presentation)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Presentation  $presentation
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Presentation $presentation)
-    {
-        //
-    }
-
-    public function regist(Request $request)
-    {
-        return Presentation::regist($request);
-    }
-
-    /**
      * Remove the specified resource from storage.
-     *
-     * @param  \App\Presentation  $presentation
-     * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request): JsonResponse
     {
-        return Presentation::remove($id);
+        Presentation::destroy($request->id);
+
+        return response()->json(204);            
     }
 }
