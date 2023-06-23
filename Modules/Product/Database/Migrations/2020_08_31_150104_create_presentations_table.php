@@ -31,7 +31,8 @@ class CreatePresentationsTable extends Migration
             $table->timestamps();
             $table->foreign('product_id')->references('id')->on('products');
             $table->unique(['company_id', 'product_id', 'packing']);
-            $table->unique(['company_id', 'int_cod']); 
+            $table->unique(['company_id', 'int_cod']);
+            $table->softDeletes();
         });
     }
 
