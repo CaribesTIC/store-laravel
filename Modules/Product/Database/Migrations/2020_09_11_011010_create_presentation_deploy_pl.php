@@ -13,7 +13,7 @@ class CreatePresentationDeployPl extends Migration
      */
     public function up()
     {
-        DB::connection('pgsql_product')->unprepared("DROP FUNCTION public.presentation_deploy(integer);");
+        //DB::connection('pgsql_product')->unprepared("DROP FUNCTION public.presentation_deploy(integer);");
         DB::connection('pgsql_product')->unprepared("
 CREATE OR REPLACE FUNCTION public.presentation_deploy(i_id integer)
   RETURNS character AS
