@@ -1,6 +1,47 @@
 # inventory-laravel
 Inventory Laravel
 
+1. Download the project or clone it.
+2. Copy and paste the file `.env.example` or `.env.example.docker` to `.env`.
+3. If you want to containerize this application and you already have docker and docker-compose installed then run:
+`docker-compose up -d --build`
+4. At the end of the containerization enter the `store_pgsql` container with:
+```
+docker exec -it store_pgsql bash
+```
+5. Then run:
+```
+psql -U postgres
+CREATE DATABASE common_db;
+CREATE DATABASE product_db;
+\q
+exit
+```
+6. Enter the `store_php` container with:
+```
+docker exec -it store_php bash
+```
+7. Then run:
+```
+composer install -vvv
+php artisan key:generate
+php artisan migrate:fresh --seed
+php artisan module:seed
+php artisan optimize
+chmod -R 777 storage/
+php artisan storage:link
+exit
+```
+8. If you are containerizing the app then get the IPAddress with the command:
+```
+docker inspect store_nginx
+```
+9. Set up a domain in your `etc/hosts` with the IPAddress of the container `store_nginx`:
+```
+sudo vim /etc/hosts
+###.##.#.#  api.store.dev.com
+```
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
