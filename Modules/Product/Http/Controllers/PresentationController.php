@@ -16,7 +16,8 @@ use Modules\Product\Http\Services\Presentation\{
     //IndexPresentationService,
     StorePresentationService,
     UpdatePresentationService
-}; 
+};
+use Illuminate\Support\Facades\Storage;
 
 class PresentationController extends Controller
 {
@@ -57,4 +58,28 @@ class PresentationController extends Controller
 
         return response()->json(204);            
     }
+    
+    public function fileUpload(Request $request)
+    {
+    //dd([$request->presentationId, $request->file]);
+    //isset($request->file['preview']);
+      {
+      try {
+          $filePath = Storage::disk('local')->putFileAs(
+            'public/Product/presentations',
+            $request->file,
+            'presentation-'.$request->presentationId
+          );              
+          //$user->avatar = env('DO_SPACES_PUBLIC').substr($filePath, 7, strlen($filePath)-1);
+          //$user->save();
+      } catch (Exception $exception) {
+          return response()->json(['message' => $exception->getMessage()], 409);
+      }
+      //return new UserResource($user);
+      }
+    }    
+    
+    
+    
+    
 }
