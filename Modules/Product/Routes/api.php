@@ -49,12 +49,15 @@ Route::prefix('products')->group(function () {
 });
 
 Route::prefix('presentations')->group(function () {
-  Route::get('/{productId}', [PresentationController::class, 'getAllByProduct']);  
+  Route::get('/{productId}', [PresentationController::class, 'getAllByProduct']);
   Route::get('/{presentation}', [PresentationController::class, 'show']);
   Route::post('/', [PresentationController::class, 'store']);
   Route::put('/{presentation}', [PresentationController::class, 'update']);
   Route::delete('/{id}', [PresentationController::class,'destroy']);
 });
+Route::post('/presentation-fileupload/{presentationId}', [PresentationController::class,'fileUpload']);  
+
+
 
 /*Route::get('/product/get/{type}/{value0?}/{value1?}', [ProductController::class, 'get']);
 Route::post('/product/regist', [ProductController::class, 'regist']);
