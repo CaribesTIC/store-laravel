@@ -25,7 +25,8 @@ class CreatePresentationsTable extends Migration
             $table->integer('stock_min')->default(5);
             $table->integer('stock_max')->default(5);
             $table->boolean('sale_type')->default(true);        
-            $table->boolean('status')->default(true);                                  
+            $table->boolean('status')->default(true);
+            $table->string('photo_path')->default('');                                
             $table->integer('user_insert_id')->default(1);
             $table->integer('user_update_id')->default(1);           
             $table->timestamps();
