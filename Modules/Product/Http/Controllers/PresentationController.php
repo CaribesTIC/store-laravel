@@ -59,27 +59,21 @@ class PresentationController extends Controller
         return response()->json(204);            
     }
     
-    public function fileUpload(Request $request)
+    public function fileUpload(Request $request, Presentation $presentation): JsonResponse
     {
-    //dd([$request->presentationId, $request->file]);
-    //isset($request->file['preview']);
       {
       try {
           $filePath = Storage::disk('local')->putFileAs(
-            'public/Product/presentations',
-            $request->file,
-            'presentation-'.$request->presentationId
-          );              
-          //$user->avatar = env('DO_SPACES_PUBLIC').substr($filePath, 7, strlen($filePath)-1);
-          //$user->save();
+              'public/Product/presentations',
+              $request->file,
+              'presentation-'.$presentation->id
+          );
+          $presentation->photo_path = str_replace("public", "storage", $filePath);
+          $presentation->save();
       } catch (Exception $exception) {
           return response()->json(['message' => $exception->getMessage()], 409);
-      }
-      //return new UserResource($user);
+      }//return new PresentationResource($presentation);
+      return response()->json(['message' => 'Photo uploaded'], 201);
       }
     }    
-    
-    
-    
-    
 }

@@ -55,7 +55,7 @@ Route::prefix('presentations')->group(function () {
   Route::put('/{presentation}', [PresentationController::class, 'update']);
   Route::delete('/{id}', [PresentationController::class,'destroy']);
 });
-Route::post('/presentation-fileupload/{presentationId}', [PresentationController::class,'fileUpload']);  
+Route::post('/presentation-fileupload/{presentation}', [PresentationController::class,'fileUpload']);  
 
 
 
