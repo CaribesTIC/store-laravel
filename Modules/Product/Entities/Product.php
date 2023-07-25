@@ -4,11 +4,12 @@ namespace Modules\Product\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 
 class Product extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $connection = 'pgsql_product';
 
@@ -42,6 +43,12 @@ class Product extends Model
     {        
         return $this->belongsTo(\Modules\Product\Entities\mark::class);
     }
+
+    public function presentations()
+    {        
+        return $this->hasMany(\Modules\Product\Entities\Presentation::class);
+    }
+
 
     private static function replaceData($request, $string)
     {

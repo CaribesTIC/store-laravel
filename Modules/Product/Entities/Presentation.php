@@ -14,7 +14,15 @@ class Presentation extends Model
     protected $connection = 'pgsql_product';
 
     //protected $fillable = [];
-    protected $fillable = ['measure_unit'];    
+    protected $fillable = ['measure_unit'];
+
+    /**
+     * Get the category for the product.
+     */
+    public function product()
+    {        
+        return $this->belongsTo(\Modules\Product\Entities\Product::class);
+    }
     
     protected static function newFactory()
     {
