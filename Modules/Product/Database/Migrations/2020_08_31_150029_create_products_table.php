@@ -32,6 +32,7 @@ class CreateProductsTable extends Migration
             $table->foreign('category_id')->references('id')->on('categories');
             $table->foreign('mark_id')->references('id')->on('marks');
             $table->unique(['company_id', 'name']);
+            $table->softDeletes();
         });
     }
 

@@ -17,6 +17,7 @@ use Modules\Product\Http\Requests\Product\{
     
 };
 use Modules\Product\Http\Resources\ProductResource;
+use Modules\Product\Entities\Presentation;
 
 class ProductController extends Controller
 {
@@ -56,12 +57,13 @@ class ProductController extends Controller
     }
 
     public function destroy(Request $request): JsonResponse
-    {      
-        //if (Auth::user()->isAdmin()) {
+    {
+        $count = Presentation::where('product_id', $request->id)->count();           
+        if (!$count){        
             Product::destroy($request->id);
             return response()->json(204);            
-        //}
-        return  response()->json(["message" => "Forbidden"], 403);
+        }
+        return  response()->json(["message" => "Sorry, there are $count associated records"], 403);
     }
 
     /*public function get(Request $request)
