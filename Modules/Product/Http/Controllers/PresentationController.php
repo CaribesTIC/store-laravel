@@ -54,26 +54,32 @@ class PresentationController extends Controller
      */
     public function destroy(Request $request): JsonResponse
     {
-        Presentation::destroy($request->id);
-
-        return response()->json(204);            
+        try {
+            Presentation::destroy($request->id);
+            $directory = 'public/Product/presentations/presentation-' . $request->id;
+            if (Storage::disk('local')->exists($directory)) {
+                Storage::deleteDirectory($directory);              
+            }  
+            return response()->json(204);
+        } catch (Exception $exception) {
+            return response()->json(['message' => $exception->getMessage()], 409);
+        }        
     }
     
     public function fileUpload(Request $request, Presentation $presentation): JsonResponse
-    {
-      {
+    {      
       try {
-          $filePath = Storage::disk('local')->putFileAs(
-              'public/Product/presentations',
-              $request->file,
-              'presentation-'.$presentation->id
-          );
+          $directory = 'public/Product/presentations/presentation-' . $presentation->id;
+          if (Storage::disk('local')->exists($directory)) {
+              Storage::deleteDirectory($directory);              
+          }          
+          $filePath = Storage::disk('local')->putFile($directory, $request->file, 'public');          
           $presentation->photo_path = str_replace("public", "storage", $filePath);
-          $presentation->save();
+          $presentation->save();          
       } catch (Exception $exception) {
           return response()->json(['message' => $exception->getMessage()], 409);
       }//return new PresentationResource($presentation);
       return response()->json(['message' => 'Photo uploaded'], 201);
-      }
+      
     }    
 }
