@@ -3,77 +3,68 @@
 namespace Modules\Article\Http\Controllers;
 
 use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Http\Request;
+use Illuminate\Http\{Request, JsonResponse};
 use Illuminate\Routing\Controller;
+use Modules\Article\Http\Resources\ArticleResource;
+use Modules\Article\Http\Requests\Article\{
+    StoreArticleRequest,
+    UpdateArticleRequest
+};
+use Modules\Article\Http\Services\Article\{
+    StoreArticleService,
+    IndexArticleService,
+    UpdateArticleService
+};
+use Modules\Article\Entities\Article;
 
 class ArticleController extends Controller
 {
-    /**
+    /*
      * Display a listing of the resource.
-     * @return Renderable
      */
-    public function index()
+    public function index(Request $request): JsonResponse
     {
-        return view('article::index');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     * @return Renderable
-     */
-    public function create()
-    {
-        return view('article::create');
+        return IndexArticleService::execute($request);
     }
 
     /**
      * Store a newly created resource in storage.
-     * @param Request $request
-     * @return Renderable
-     */
-    public function store(Request $request)
+     */ 
+    public function store(StoreArticleRequest $request): JsonResponse
     {
-        //
+        return StoreArticleService::execute($request);
     }
 
     /**
-     * Show the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
-    public function show($id)
+     * Display the specified resource.
+    */
+    public function show(Article $article): ArticleResource | JsonResponse
     {
-        return view('article::show');
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
-    public function edit($id)
-    {
-        return view('article::edit');
+        return new ArticleResource($article);
     }
 
     /**
      * Update the specified resource in storage.
-     * @param Request $request
-     * @param int $id
-     * @return Renderable
-     */
-    public function update(Request $request, $id)
+     */     
+    public function update(UpdateArticleRequest $request, Article $article): JsonResponse
     {
-        //
+        return UpdateArticleService::execute($request, $article);
     }
 
     /**
      * Remove the specified resource from storage.
-     * @param int $id
-     * @return Renderable
      */
-    public function destroy($id)
+    public function destroy(Request $request): JsonResponse
+    {      
+        Article::destroy($request->id);
+        return response()->json(204);
+    }
+
+    /*
+     * Display a listing of the resource to help.
+     */
+    public function help(): JsonResponse
     {
-        //
+        return response()->json(Article::all());
     }
 }
