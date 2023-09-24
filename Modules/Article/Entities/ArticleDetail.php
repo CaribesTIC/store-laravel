@@ -10,7 +10,7 @@ class ArticleDetail extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $connection = 'pgsql_article';
+    //protected $connection = 'pgsql_article';
 
     protected $fillable = [
         'id',     
