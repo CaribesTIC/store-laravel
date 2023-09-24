@@ -27,6 +27,7 @@ class CreateArticleDetailsTable extends Migration
                 ->on('articles')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
