@@ -7,6 +7,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
 use Illuminate\Database\Eloquent\Collection;
 use Modules\Article\Entities\ArticleDetail;
+use Modules\Article\Repositories\ArticleDetailRepository;
 use Modules\Article\Http\Requests\ArticleDetail\{
     StoreArticleDetailRequest,
     UpdateArticleDetailRequest    
@@ -23,7 +24,7 @@ class ArticleDetailController extends Controller
      */
     public function getAllByArticle(Request $request)//: Collection
     {
-        return ArticleDetail::where('article_id', $request->articleId)->get();
+        return ArticleDetailRepository::getAllByArticle($request);
     }
 
     /**

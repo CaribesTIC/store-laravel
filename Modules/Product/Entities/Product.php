@@ -22,7 +22,9 @@ class Product extends Model
         'measure_unit_id',        
         'photo'
     ];
-    
+
+   protected $with = ['category', 'mark'];
+
     protected static function newFactory()
     {
         return \Modules\Product\Database\factories\ProductFactory::new();
@@ -41,7 +43,7 @@ class Product extends Model
      */
     public function mark()
     {        
-        return $this->belongsTo(\Modules\Product\Entities\mark::class);
+        return $this->belongsTo(\Modules\Product\Entities\Mark::class);
     }
 
     public function presentations()
