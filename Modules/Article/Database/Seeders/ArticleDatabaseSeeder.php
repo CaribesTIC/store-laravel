@@ -20,7 +20,7 @@ class ArticleDatabaseSeeder extends Seeder
         
         for ($x = 0; $x < 10; $x++) {
             Article::factory()
-                ->hasArticleDetails(1) //rand(1, 3))
+                ->hasArticleDetails(1)
                 ->create();
         }
     }
