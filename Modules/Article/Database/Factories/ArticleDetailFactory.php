@@ -22,7 +22,7 @@ class ArticleDetailFactory extends Factory
     public function definition()
     {
         return [        
-            'presentation_id' => 1,
+            'presentation_id' => rand(1, 3),
         ];
     }
 }
