@@ -23,7 +23,7 @@ class CreateProductsTable extends Migration
             $table->integer('measure_unit_type_id');
             $table->integer('measure_unit_id');
             $table->string('measure_unit', 30);
-            $table->string('photo')->default('');   
+            //$table->string('photo')->default('');   
             $table->integer('user_insert_id')->default(1);
             $table->integer('user_update_id')->default(1);
             $table->integer('user_edit_id')->default(1);

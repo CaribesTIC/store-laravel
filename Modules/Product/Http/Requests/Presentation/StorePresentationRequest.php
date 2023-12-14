@@ -25,13 +25,13 @@ class StorePresentationRequest extends FormRequest
         return [        
            "product_id" => ["required"],
             //"sale_type" => ["required"],
-            "int_cod" => ["required"],     
+            //"int_cod" => ["required"],     
             "bar_cod" => ["required"],
             "packing_deployed" => ["required"],
             "packing_json" => ["required"],
             // "packing_deployed" => ["required"],     --->    it is not necessary to send
-            "stock_min" => ["required"],
-            "stock_max" => ["required"],
+            //"stock_min" => ["required"],
+            //"stock_max" => ["required"],
             "price" => ["required"],
             "status" => ["required"]            
         ];

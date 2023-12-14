@@ -20,11 +20,11 @@ class CreatePresentationsTable extends Migration
             $table->integer('product_id')->nullable()->unsigned();//unsignedInteger //(Laravel 7.x) ->nullable()->constrained();                        
             $table->jsonb('packing');            
             $table->string('bar_cod', 15);
-            $table->string('int_cod', 15);            
+            //$table->string('int_cod', 15);            
             $table->float('price')->default(100);
-            $table->integer('stock_min')->default(5);
-            $table->integer('stock_max')->default(5);
-            $table->boolean('sale_type')->default(true);        
+            //$table->integer('stock_min')->default(5);
+            //$table->integer('stock_max')->default(5);
+            //$table->boolean('sale_type')->default(true);        
             $table->boolean('status')->default(true);
             $table->string('photo_path')->default('');                                
             $table->integer('user_insert_id')->default(1);
@@ -32,7 +32,7 @@ class CreatePresentationsTable extends Migration
             $table->timestamps();
             $table->foreign('product_id')->references('id')->on('products');
             $table->unique(['company_id', 'product_id', 'packing']);
-            $table->unique(['company_id', 'int_cod']);
+            //$table->unique(['company_id', 'int_cod']);
             $table->softDeletes();
         });
     }
