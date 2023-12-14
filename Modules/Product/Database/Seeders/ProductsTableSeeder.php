@@ -22,7 +22,7 @@ class ProductsTableSeeder extends Seeder
             'measure_unit_type_id' => 2,
             'measure_unit_id' => 14,
             'measure_unit' => 'Kilogramo(s)',
-            'photo' => ''
+            // 'photo' => ''
         ]);
         
         Product::create([
@@ -32,7 +32,7 @@ class ProductsTableSeeder extends Seeder
             'measure_unit_type_id' => 2,
             'measure_unit_id' => 14,
             'measure_unit' => 'Kilogramo(s)',
-            'photo' => ''
+            // 'photo' => ''
         ]);
         
         Product::create([
@@ -42,7 +42,7 @@ class ProductsTableSeeder extends Seeder
             'measure_unit_type_id' => 2,
             'measure_unit_id' => 14,
             'measure_unit' => 'Kilogramo(s)',
-            'photo' => ''
+            // 'photo' => ''
         ]);
         
         Product::create([
@@ -52,7 +52,7 @@ class ProductsTableSeeder extends Seeder
             'measure_unit_type_id' => 2,
             'measure_unit_id' => 14,
             'measure_unit' => 'Kilogramo(s)',
-            'photo' => ''
+            // 'photo' => ''
         ]);
         
         Product::create([
@@ -62,7 +62,7 @@ class ProductsTableSeeder extends Seeder
             'measure_unit_type_id' => 2,
             'measure_unit_id' => 14,
             'measure_unit' => 'Kilogramo(s)',
-            'photo' => ''
+            // 'photo' => ''
         ]);
         
         Product::create([
@@ -72,7 +72,7 @@ class ProductsTableSeeder extends Seeder
             'measure_unit_type_id' => 2,
             'measure_unit_id' => 14,
             'measure_unit' => 'Kilogramo(s)',
-            'photo' => ''
+            // 'photo' => ''
         ]);
     }
 }

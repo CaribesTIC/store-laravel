@@ -19,11 +19,11 @@ class Product extends Model
         'category_id',
         'mark_id',
         'measure_unit_type_id',
-        'measure_unit_id',        
-        'photo'
+        'measure_unit_id'      
+        //'photo'
     ];
 
-   protected $with = ['category', 'mark'];
+   protected $load = ['category', 'mark'];
 
     protected static function newFactory()
     {
@@ -74,7 +74,7 @@ class Product extends Model
                  ,A.measure_unit_type_id
                  ,A.measure_unit_id
                  ,A.measure_unit
-                 ,A.photo
+                 //,A.photo
                  ,B.name AS des_category
                  ,B.family AS des_category_family
                  ,C.name AS des_mark
