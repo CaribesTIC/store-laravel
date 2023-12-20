@@ -48,6 +48,7 @@ Route::prefix('products')->group(function () {
   Route::delete('/{id}', [ProductController::class,'destroy']);
 });
 
+Route::get('/presentation-search', [PresentationController::class,'search']);
 Route::prefix('presentations')->group(function () {
   Route::get('/{productId}', [PresentationController::class, 'getAllByProduct']);
   Route::get('/{presentation}', [PresentationController::class, 'show']);
