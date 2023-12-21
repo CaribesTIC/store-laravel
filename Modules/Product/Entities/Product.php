@@ -24,6 +24,7 @@ class Product extends Model
     ];
 
    protected $load = ['category', 'mark'];
+  // protected $with = ['category', 'mark'];   
 
     protected static function newFactory()
     {
