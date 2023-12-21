@@ -15,8 +15,8 @@ class Presentation extends Model
 
     //protected $fillable = [];
     protected $fillable = ['measure_unit'];
-    
-    protected $with = ['product'];
+
+    protected $with = ['product', 'product.category', 'product.mark'];
 
     /**
      * Get the category for the product.

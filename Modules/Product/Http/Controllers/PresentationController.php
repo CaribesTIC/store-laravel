@@ -86,14 +86,49 @@ class PresentationController extends Controller
     }
     
     
+    public function search(Request $request): JsonResponse
+    {
+        // Initialize query
+        $query = Presentation::query()
+            ->select(
+                DB::raw("* ,presentation_deploy(presentations.id) as packing_deployed")
+            );
+        // search 
+        $search = $request->input("search");
+        if ($search) {
+            /*$query->where(function ($query) use ($search) {
+                $query
+                    ->where("products.name", "like", "%$search%");
+                    //->orWhere("email", "like", "%$search%");
+            });*/
+        }
 
+        // sort 
+        $sort = $request->input("sort");
+        $direction = $request->input("direction") === "desc" ? "desc" : "asc";        
+        ($sort)
+            ? $query->orderBy($sort, $direction) 
+                : $query->orderBy("id", "asc");
 
-/**
+        // get paginated results 
+        $presentations = $query
+            ->paginate(500)
+            ->appends(request()->query());
+
+        return response()->json([
+            "rows" => $presentations,
+            "sort" => $request->query("sort"),
+            "direction" => $request->query("direction"),
+            "search" => $request->query("search")
+        ]);
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Inertia\Response
      */
-    static public function search(Request $request): JsonResponse
+    /*static public function search(Request $request): JsonResponse
     {          
         // Initialize query          
         $query = Product::query()
@@ -134,7 +169,7 @@ class PresentationController extends Controller
             "direction" => $request->query("direction"),
             "search" => $request->query("search")
         ]);
-    }
+    }*/
 
 
 
