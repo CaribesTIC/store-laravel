@@ -112,7 +112,7 @@ class PresentationController extends Controller
 
         // get paginated results 
         $presentations = $query
-            ->paginate(500)
+            ->paginate(5)
             ->appends(request()->query());
 
         return response()->json([
