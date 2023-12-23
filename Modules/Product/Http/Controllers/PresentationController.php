@@ -90,17 +90,32 @@ class PresentationController extends Controller
     {
         // Initialize query
         $query = Presentation::query()
-            ->select(
-                DB::raw("* ,presentation_deploy(presentations.id) as packing_deployed")
-            );
+            ->select(           
+                DB::raw("
+                    presentations.bar_cod,                
+                    presentations.price,
+                    presentations.status,
+                    presentations.photo_path,
+                    presentation_deploy(presentations.id) as packing_deployed,                    
+                    products.name as product_name,
+                    categories.name as category_name,
+                    marks.name as mark_name
+                ")
+            )
+            ->join("products"  , "products.id"  , "=", "presentations.product_id")
+            ->join("categories", "categories.id", "=", "products.category_id")
+            ->join("marks", "marks.id", "=", "products.mark_id");
+            
         // search 
-        $search = $request->input("search");
+        $search = strtoupper($request->input("search"));
         if ($search) {
-            /*$query->where(function ($query) use ($search) {
+            $query->where(function ($query) use ($search) {
                 $query
-                    ->where("products.name", "like", "%$search%");
-                    //->orWhere("email", "like", "%$search%");
-            });*/
+                    ->where  (DB::raw("UPPER(bar_cod)"        ), "like", "%$search%")
+                    ->orWhere(DB::raw("UPPER(products.name)"  ), "like", "%$search%")
+                    ->orWhere(DB::raw("UPPER(categories.name)"), "like", "%$search%")
+                    ->orWhere(DB::raw("UPPER(marks.name)"     ), "like", "%$search%");
+            });
         }
 
         // sort 
@@ -108,7 +123,7 @@ class PresentationController extends Controller
         $direction = $request->input("direction") === "desc" ? "desc" : "asc";        
         ($sort)
             ? $query->orderBy($sort, $direction) 
-                : $query->orderBy("id", "asc");
+                : $query->orderBy("presentations.id", "asc");
 
         // get paginated results 
         $presentations = $query
