@@ -92,6 +92,7 @@ class PresentationController extends Controller
         $query = Presentation::query()
             ->select(           
                 DB::raw("
+                    presentations.id,
                     presentations.bar_cod,                
                     presentations.price,
                     presentations.status,
