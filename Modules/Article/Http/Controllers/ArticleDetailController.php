@@ -30,9 +30,11 @@ class ArticleDetailController extends Controller
     /**
      * Store a newly created resource in storage.
      */    
-    public function store(StoreArticleDetailRequest $request): JsonResponse
-    {    
-        return StoreArticleDetailService::execute($request);
+    //public function store(StoreArticleDetailRequest $request): JsonResponse
+    public function store(Request $request): JsonResponse
+    {   
+        return  response()->json($request, 201);
+        //return StoreArticleDetailService::execute($request);
     }
     
     /**
