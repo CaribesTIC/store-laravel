@@ -32,9 +32,9 @@ class ArticleDetailController extends Controller
      */    
     //public function store(StoreArticleDetailRequest $request): JsonResponse
     public function store(Request $request): JsonResponse
-    {   
-        return  response()->json($request, 201);
-        //return StoreArticleDetailService::execute($request);
+    {
+        //return  response()->json($request, 201);
+        return StoreArticleDetailService::execute($request);
     }
     
     /**
