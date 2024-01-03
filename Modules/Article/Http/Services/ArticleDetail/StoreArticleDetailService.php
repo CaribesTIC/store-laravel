@@ -15,7 +15,7 @@ class StoreArticleDetailService
 
         //return response()->json($request[0]);
 
-        ArticleDetail::where('article_id', intval($request[0]["article_id"]))->delete();
+        ArticleDetail::where('article_id', intval($request[0]["article_id"]))->forceDelete();
 
         foreach ($request->all() as $rqst) {
             $articleDetail = new ArticleDetail();
@@ -27,8 +27,6 @@ class StoreArticleDetailService
             //$articleDetail->user_update_id = $rqst["user_update_id;
             $articleDetail->save();            
         }
-
-
 
         return response()->json([
             'message' => 'Article detail created',

@@ -30,7 +30,7 @@ class ArticleDetailRepository extends ArticleDetail
             $response = Presentation::select(
             DB::raw("* ,presentation_deploy(presentations.id) as packing_deployed")
         )->find($value['presentation_id']);
-            
+            $articleDetails[$key]['bar_cod'] = $response['bar_cod'];
             $articleDetails[$key]['category'] = $response['product']['category']['name'];
             $articleDetails[$key]['product'] = $response['product']['name'];
             $articleDetails[$key]['mark'] = $response['product']['mark']['name'];
