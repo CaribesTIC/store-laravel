@@ -14,7 +14,8 @@ class CreateMovementsTable extends Migration
     public function up()
     {
         Schema::create('movements', function (Blueprint $table) {
-            $table->id();
+            //$table->id();
+            $table->increments('id');
             $table->integer('type_id');
             $table->string('number', 10);
             $table->dateTime('date_time',0)->useCurrent();

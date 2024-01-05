@@ -29,9 +29,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::delete('/{id}', [ArticleController::class,'destroy']);
     });
     Route::get('/articles-help', [ArticleController::class, 'help']);
-});
 
-Route::middleware(['auth:sanctum'])->group(function () {
     Route::prefix('article_details')->group(function () {  
         Route::get('/{articleId}', [ArticleDetailController::class, 'getAllByArticle']);
         Route::get('/{article_detail}', [ArticleDetailController::class, 'show']);
