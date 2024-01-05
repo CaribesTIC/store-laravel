@@ -14,15 +14,19 @@ class CreateMovementDetailsTable extends Migration
     public function up()
     {
         Schema::create('movement_details', function (Blueprint $table) {
-            $table->id();
-            $table->integer('movement_id');
+            //$table->id();
+            $table->increments('id');
+            //$table->integer('movement_id');
+            $table->integer('movement_id')->nullable()->unsigned();
+
             $table->integer('article_id');
             $table->integer('quantity')->default(1);
             $table->date('close')->nullable();
             $table->integer('user_insert_id')->default(1);
             $table->integer('user_update_id')->default(1);
             $table->unique(['movement_id', 'article_id']);
-            $table->foreign('movement_id')->references('id')->on('movements');      
+            $table->foreign('movement_id')->references('id')->on('movements');
+            //$table->softDeletes();
             $table->timestamps();
         });
     }
