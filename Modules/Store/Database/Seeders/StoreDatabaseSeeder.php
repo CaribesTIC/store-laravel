@@ -16,6 +16,10 @@ class StoreDatabaseSeeder extends Seeder
     {
         Model::unguard();
 
-        // $this->call("OthersTableSeeder");
+        // $this->call("MovementTableSeeder");
+        $this->call([
+            //OthersTableSeeder:class,
+            MovementTableSeeder::class,
+        ]);
     }
 }
