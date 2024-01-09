@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Inventory\Entities;
+namespace Modules\Store\Entities;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -10,7 +10,7 @@ class MovementDetail extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $connection = 'pgsql_inventory';
+    protected $connection = 'pgsql_store';
 
     protected $fillable = [
         'id',     
@@ -28,12 +28,12 @@ class MovementDetail extends Model
     
     public function movement()
     {
-        return $this->belongsTo(\Modules\Inventory\Entities\Movement::class);
+        return $this->belongsTo(\Modules\Store\Entities\Movement::class);
     }
 
 
     protected static function newFactory()
     {
-        return \Modules\Inventory\Database\Factories\MovementDetailFactory::new();
+        return \Modules\Store\Database\Factories\MovementDetailFactory::new();
     }
 }
