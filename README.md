@@ -1,5 +1,5 @@
-# inventory-laravel
-Inventory Laravel
+# store-laravel
+Store Laravel
 
 1. Download the project or clone it.
 2. Copy and paste the file `.env.example` or `.env.example.docker` to `.env`.

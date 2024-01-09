@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class MovementDetail extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;//, SoftDeletes;
 
-    protected $connection = 'pgsql_store';
+    //protected $connection = 'pgsql_store';
 
     protected $fillable = [
         'id',     
@@ -32,8 +32,8 @@ class MovementDetail extends Model
     }
 
 
-    protected static function newFactory()
+    /*protected static function newFactory()
     {
         return \Modules\Store\Database\Factories\MovementDetailFactory::new();
-    }
+    }*/
 }
