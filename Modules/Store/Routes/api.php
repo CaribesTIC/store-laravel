@@ -2,8 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use Modules\Inventory\Http\Controllers\MovementController;
-use Modules\Inventory\Http\Controllers\MovementDetailController;
+use Modules\Store\Http\Controllers\MovementController;
+use Modules\Store\Http\Controllers\MovementDetailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,7 +16,7 @@ use Modules\Inventory\Http\Controllers\MovementDetailController;
 |
 */
 
-//Route::middleware('auth:api')->get('/inventory', function (Request $request) {
+//Route::middleware('auth:api')->get('/store', function (Request $request) {
 //    return $request->user();
 //});
 

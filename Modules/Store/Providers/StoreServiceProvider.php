@@ -1,21 +1,21 @@
 <?php
 
-namespace Modules\Inventory\Providers;
+namespace Modules\Store\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
 
-class InventoryServiceProvider extends ServiceProvider
+class StoreServiceProvider extends ServiceProvider
 {
     /**
      * @var string $moduleName
      */
-    protected $moduleName = 'Inventory';
+    protected $moduleName = 'Store';
 
     /**
      * @var string $moduleNameLower
      */
-    protected $moduleNameLower = 'inventory';
+    protected $moduleNameLower = 'store';
 
     /**
      * Boot the application events.
