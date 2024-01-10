@@ -18,7 +18,7 @@ class MovementDetail extends Model
         'article_id',     
         'quantity',     
         'close',     
-        'user_insert_id'    
+        'user_insert_id',    
         'user_update_id'     
     ];
 
