@@ -22,12 +22,21 @@ use Modules\Store\Http\Controllers\MovementDetailController;
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::prefix('movements')->group(function () {
+        Route::get('/{typeId?}', [MovementController::class, 'index']);
+        Route::get('/{typeId}/{movement}', [MovementController::class, 'show']);
+        Route::post('/{typeId}', [MovementController::class, 'store']);
+        Route::put('/{movement}', [MovementController::class, 'update']);
+        Route::delete('/{typeId}/{id}', [MovementController::class,'destroy']);
+    });
+
+    /*Route::prefix('movements')->group(function () {
         Route::get('/', [MovementController::class, 'index']);
         Route::get('/{movement}', [MovementController::class, 'show']);
         Route::post('/', [MovementController::class, 'store']);
         Route::put('/{movement}', [MovementController::class, 'update']);
         Route::delete('/{id}', [MovementController::class,'destroy']);
-    });
+    });*/
+
     Route::get('/movements-help', [MovementController::class, 'help']);
 
     Route::prefix('movement_details')->group(function () {  

@@ -28,6 +28,8 @@ class MovementController extends Controller
         //return IndexArticleService::execute($request);
         /* Initialize query */
         $query = Movement::query();
+        if ($request->typeId)
+            $query->where("type_id", $request->typeId);
 
         /* search */
         $search = strtolower($request->input("search"));
