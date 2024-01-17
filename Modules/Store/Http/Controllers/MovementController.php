@@ -5,8 +5,9 @@ namespace Modules\Store\Http\Controllers;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\{Request, JsonResponse};
 use Illuminate\Routing\Controller;
-/*use Modules\Article\Http\Resources\ArticleResource;
-use Modules\Article\Http\Requests\Article\{
+use Modules\Store\Http\Resources\MovementResource;
+    
+/*use Modules\Article\Http\Requests\Article\{
     StoreArticleRequest,
     UpdateArticleRequest
 };
@@ -67,6 +68,15 @@ class MovementController extends Controller
             "direction" => $request->query("direction"),
             "search" => $request->query("search")
         ]);
+    }
+    
+    /**
+     * Display the specified resource.
+    */
+    public function show(Movement $movement, Request $request): MovementResource | JsonResponse    
+    {
+       //return response()->json($movement);
+        return new MovementResource($movement);
     }
 
 
