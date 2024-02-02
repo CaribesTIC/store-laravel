@@ -39,6 +39,39 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('/movements-help', [MovementController::class, 'help']);
 
+    Route::get('/existences', function (Request $request) {
+        return response()->json([[
+            "article_id" => 3,
+            "inputs" => 10,  
+            "outputs" => 0,
+            "reverse_inputs" => 0,
+            "reverse_outputs" => 0,
+            "total" => 10
+          ], [
+            "article_id" => 4,
+            "inputs" => 10,  
+            "outputs" => 0,
+            "reverse_inputs" => 0,
+            "reverse_outputs" => 0,
+            "total" => 10
+          ], [
+            "article_id" => 2,
+            "inputs" => 10,  
+            "outputs" => 5,
+            "reverse_inputs" => 0,
+            "reverse_outputs" => 0,
+            "total" => 5
+          ], [
+            "article_id" => 1,
+            "inputs" => 20,  
+            "outputs" => 5,
+            "reverse_inputs" => 0,
+            "reverse_outputs" => 0,
+            "total" => 15
+          ]]);
+    });
+
+
     Route::prefix('movement_details')->group(function () {  
         Route::get('/{movementId}', [MovementDetailController::class, 'getAllByMovement']);
         Route::get('/{movement_detail}', [MovementDetailController::class, 'show']);
