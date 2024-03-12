@@ -26,7 +26,10 @@ class MovementDetailController extends Controller
     {
         //return response()->json($request, 201); $request->movementId
         
-        $movementDetails = MovementDetail::where('movement_id', $request->movementId)->get();
+        $movementDetails = MovementDetail::
+          select("articles.*", "movement_details.*")
+          ->join('articles', 'movement_details.article_id', '=', 'articles.id')        
+          ->where('movement_id', $request->movementId)->get();
         
         return response()->json($movementDetails);
         //return MovementDetailRepository::getAllByMovement($request);
