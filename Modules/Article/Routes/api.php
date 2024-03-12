@@ -21,6 +21,7 @@ use Modules\Article\Http\Controllers\ArticleDetailController;
 //});
 
 Route::middleware(['auth:sanctum'])->group(function () {
+    Route::get('/articles-search', [ArticleController::class,'search']);
     Route::prefix('articles')->group(function () {
         Route::get('/', [ArticleController::class, 'index']);
         Route::get('/{article}', [ArticleController::class, 'show']);

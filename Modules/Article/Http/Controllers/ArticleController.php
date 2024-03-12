@@ -16,6 +16,9 @@ use Modules\Article\Http\Services\Article\{
     UpdateArticleService
 };
 use Modules\Article\Entities\Article;
+//use Modules\Product\Entities\Presentation;
+use Illuminate\Support\Facades\DB;
+
 
 class ArticleController extends Controller
 {
@@ -66,5 +69,64 @@ class ArticleController extends Controller
     public function help(): JsonResponse
     {
         return response()->json(Article::all());
+    }
+
+    public function search(Request $request): JsonResponse
+    {
+        // Initialize query
+
+
+        /*
+                            //articles.bar_cod,                
+                    //articles.price,
+                    //articles.status,
+                    //articles.photo_path,
+                    //presentation_deploy(presentations.id) as packing_deployed,                    
+                    //products.name as product_name,
+                    //categories.name as category_name,
+                    //marks.name as mark_name
+        */
+        $query = Article::query()
+            ->select(           
+                DB::raw("
+                    articles.*
+                ")
+            )
+            //->join("products"  , "products.id"  , "=", "presentations.product_id")
+            //->join("categories", "categories.id", "=", "products.category_id")
+            //->join("marks", "marks.id", "=", "products.mark_id")
+            ;
+            
+        // search 
+        $search = strtoupper($request->input("search"));
+        if ($search) {
+            $query->where(function ($query) use ($search) {
+                //$query
+                    //->where  (DB::raw("UPPER(bar_cod)"        ), "like", "%$search%")
+                    //->orWhere(DB::raw("UPPER(products.name)"  ), "like", "%$search%")
+                    //->orWhere(DB::raw("UPPER(categories.name)"), "like", "%$search%")
+                    //->orWhere(DB::raw("UPPER(marks.name)"     ), "like", "%$search%")
+                //    ;
+            });
+        }
+
+        // sort 
+        $sort = $request->input("sort");
+        $direction = $request->input("direction") === "desc" ? "desc" : "asc";        
+        ($sort)
+            ? $query->orderBy($sort, $direction) 
+                : $query->orderBy("articles.id", "asc");
+
+        // get paginated results 
+        $presentations = $query
+            ->paginate(5)
+            ->appends(request()->query());
+
+        return response()->json([
+            "rows" => $presentations,
+            "sort" => $request->query("sort"),
+            "direction" => $request->query("direction"),
+            "search" => $request->query("search")
+        ]);
     }
 }
