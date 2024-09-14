@@ -16,17 +16,17 @@ return [
     */
 
     'paths' => [
-      //'*',
-      'api/*',
-      'login',
-      'logout',
-      'register',
-      'user/password',
-      'forgot-password',
-      'reset-password',
-      'sanctum/csrf-cookie',
-      'user/profile-information',
-      'email/verification-notification',
+        //'*',
+        'api/*',
+        'sanctum/csrf-cookie',
+        'login',
+        'logout',
+        'register',
+        'user/password',
+        'forgot-password',
+        'reset-password',        
+        'user/profile-information',
+        'email/verification-notification'
     ],
     'allowed_methods' => ['*'],
     'allowed_origins' => ['*'],
@@ -34,25 +34,5 @@ return [
     'allowed_headers' => ['*'],
     'exposed_headers' => [],
     'max_age' => 0,
-    'supports_credentials' => true,
-
-
-
-    /*
-    'paths' => ['api/*', 'sanctum/csrf-cookie'],
-
-    'allowed_methods' => ['*'],
-
-    'allowed_origins' => ['*'],
-
-    'allowed_origins_patterns' => [],
-
-    'allowed_headers' => ['*'],
-
-    'exposed_headers' => [],
-
-    'max_age' => 0,
-
-    'supports_credentials' => false,
-    */
+    'supports_credentials' => true
 ];
