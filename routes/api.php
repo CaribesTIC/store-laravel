@@ -10,33 +10,23 @@ use App\Http\Controllers\AvatarController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\RoleController;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "api" middleware group. Make something great!
-|
-| Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-|    return $request->user();
-| });
-|
-*/
+/*Route::get('/user', function (Request $request) {
+    return $request->user();
+})->middleware('auth:sanctum');*/
+
 
 Route::post('/sanctum/token', TokenController::class);
 Route::middleware(['auth:sanctum'])->group(function () {
     //Route::prefix('users')->middleware(['role:admin'])->group(function () {
     Route::prefix('users')->group(function () {
-        Route::get('/auth', AuthController::class);
-        Route::get('/auth-menu', AuthMenuController::class);
-        Route::get('/{user}', [UserController::class, 'show']);        
-        Route::get('/', [UserController::class, 'index']);
-        Route::post('/', [UserController::class, 'store']);
-        Route::post('/{user}', [UserController::class, 'update']);
-        Route::delete('/{id}', [UserController::class,'destroy']);
-        Route::post('/auth/avatar', [AvatarController::class, 'store']);
+       Route::get('/auth', AuthController::class);
+       Route::get('/auth-menu', AuthMenuController::class);
+       Route::get('/{user}', [UserController::class, 'show']);        
+       Route::get('/', [UserController::class, 'index']);
+       Route::post('/', [UserController::class, 'store']);
+       Route::post('/{user}', [UserController::class, 'update']);
+       Route::delete('/{id}', [UserController::class,'destroy']);
+       Route::post('/auth/avatar', [AvatarController::class, 'store']);
     });
        
     Route::prefix('menus')->group(function () {
@@ -56,7 +46,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('/', [RoleController::class, 'store']);        
         Route::put('/{role}', [RoleController::class, 'update']);
         Route::delete('/{id}', [RoleController::class,'destroy']);        
-    });    
+    });
 });
 
 Route::prefix('error')->group(function () {
@@ -71,7 +61,7 @@ Route::prefix('error')->group(function () {
     Route::get('/', function(){        
         abort(500, 'Something went wrong');        
     });
-    Route::get('/custom', function(){
+    /*Route::get('/custom', function(){
         throw new \App\Exceptions\CustomException('Error: Levi Strauss & CO.', 501);
-    });
+    });*/
 });

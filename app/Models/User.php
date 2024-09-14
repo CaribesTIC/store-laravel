@@ -12,17 +12,17 @@ use Laravel\Sanctum\HasApiTokens;
 class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
-
     protected $fillable = [
         'name',
         'email',
-        'avatar',
         'password',
+        'avatar',
         'role_id'
     ];
 
@@ -33,24 +33,28 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $hidden = [
         'password',
-        'remember_token',
-        'two_factor_recovery_codes',
-        'two_factor_secret',
-        'email_verified_at',
-        'created_at',
-        'updated_at',
-        'deleted_at'
+        'remember_token',                
+        //'two_factor_recovery_codes',
+        //'two_factor_secret',
+        //'email_verified_at',
+        //'created_at',
+        //'updated_at',
+        //'deleted_at'        
     ];
 
     /**
-     * The attributes that should be cast.
+     * Get the attributes that should be cast.
      *
-     * @var array<string, string>
+     * @return array<string, string>
      */
-    protected $casts = [
-        'is_admin' => 'boolean',
-        'email_verified_at' => 'datetime',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'email_verified_at' => 'datetime',
+            'password' => 'hashed',
+            'is_admin' => 'boolean',
+        ];
+    } 
 
     public function isAdmin(): bool
     {
