@@ -27,8 +27,8 @@ class UpdateArticleRequest extends FormRequest
             "stock_max" => ["required"],  
             "status" => ["required"],  
             "photo" => ["required"],  
-            "id_user_insert" => ["required"],  
-            "id_user_update" => ["required"] 
+            //"id_user_insert" => ["required"],  
+            //"id_user_update" => ["required"] 
             
         ];
     }
