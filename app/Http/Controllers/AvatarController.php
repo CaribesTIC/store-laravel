@@ -15,8 +15,9 @@ public function store(Request $request)
       try {
           $user = Auth::user();
           $filePath = Storage::disk('local') //$filePath = Storage::disk('spaces')
-              ->putFile('public/avatars/user-'.$user->id, $request->file, 'public');              
-          $user->avatar = env('DO_SPACES_PUBLIC').substr($filePath, 7, strlen($filePath)-1);
+              ->putFile('avatars/user-'.$user->id, $request->file, 'public');              
+          //$user->avatar = env('DO_SPACES_PUBLIC').substr($filePath, 7, strlen($filePath)-1);
+          $user->avatar = "storage/$filePath";
           $user->save();
       } catch (Exception $exception) {
           return response()->json(['message' => $exception->getMessage()], 409);

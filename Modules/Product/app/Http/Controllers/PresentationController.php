@@ -71,12 +71,12 @@ class PresentationController extends Controller
     public function fileUpload(Request $request, Presentation $presentation): JsonResponse
     {      
       try {
-          $directory = 'public/Product/presentations/presentation-' . $presentation->id;
+          $directory = 'Product/presentations/presentation-' . $presentation->id;
           if (Storage::disk('local')->exists($directory)) {
               Storage::deleteDirectory($directory);              
-          }          
+          }
           $filePath = Storage::disk('local')->putFile($directory, $request->file, 'public');          
-          $presentation->photo_path = str_replace("public", "storage", $filePath);
+          $presentation->photo_path = "storage/$filePath";
           $presentation->save();          
       } catch (Exception $exception) {
           return response()->json(['message' => $exception->getMessage()], 409);
