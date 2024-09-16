@@ -2,6 +2,7 @@
 namespace Modules\Article\Http\Services\Article;
 
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
 use Modules\Article\Http\Requests\Article\UpdateArticleRequest;
 use Modules\Article\Entities\Article;
 
@@ -18,8 +19,7 @@ class UpdateArticleService
         $article->stock_max = $request->stock_max;
         $article->status = $request->status;
         $article->photo = $request->photo;
-        $article->id_user_insert = $request->id_user_insert;
-        $article->id_user_update = $request->id_user_update;
+        $article->id_user_update = Auth::user()->id;
         
         $article->save();
 
