@@ -20,7 +20,8 @@ class StoreDatabaseSeeder extends Seeder
         $this->call([
             //OthersTableSeeder:class,
             MovementTableSeeder::class,
-            MovementDetailTableSeeder::class
+            MovementDetailTableSeeder::class,
+            SupportTypesSeeder::class
         ]);
     }
 }
