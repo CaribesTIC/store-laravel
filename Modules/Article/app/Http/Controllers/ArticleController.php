@@ -74,39 +74,26 @@ class ArticleController extends Controller
     public function search(Request $request): JsonResponse
     {
         // Initialize query
-
-
-        /*
-                            //articles.bar_cod,                
-                    //articles.price,
-                    //articles.status,
-                    //articles.photo_path,
-                    //presentation_deploy(presentations.id) as packing_deployed,                    
-                    //products.name as product_name,
-                    //categories.name as category_name,
-                    //marks.name as mark_name
-        */
         $query = Article::query()
-            ->select(           
-                DB::raw("
-                    articles.*
-                ")
-            )
-            //->join("products"  , "products.id"  , "=", "presentations.product_id")
-            //->join("categories", "categories.id", "=", "products.category_id")
-            //->join("marks", "marks.id", "=", "products.mark_id")
-            ;
-            
+            ->selectRaw("
+                    articles.id,
+                    articles.int_cod,
+                    articles.name,
+                    articles.price,
+                    articles.stock_min,
+                    articles.stock_max,
+                    articles.status,
+                    articles.photo,
+                    CASE WHEN view_stock_movement.total IS NULL THEN 0 ELSE view_stock_movement.total END as stock_existence")
+                ->leftjoin("view_stock_movement"  , "articles.id"  , "=", "view_stock_movement.article_id");
+
         // search 
         $search = strtoupper($request->input("search"));
         if ($search) {
             $query->where(function ($query) use ($search) {
-                //$query
-                    //->where  (DB::raw("UPPER(bar_cod)"        ), "like", "%$search%")
-                    //->orWhere(DB::raw("UPPER(products.name)"  ), "like", "%$search%")
-                    //->orWhere(DB::raw("UPPER(categories.name)"), "like", "%$search%")
-                    //->orWhere(DB::raw("UPPER(marks.name)"     ), "like", "%$search%")
-                //    ;
+                $query
+                    ->where  (DB::raw("UPPER(articles.int_cod)"        ), "like", "%$search%")
+                    ->orWhere(DB::raw("UPPER(articles.name)"  ), "like", "%$search%");
             });
         }
 
