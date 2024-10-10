@@ -127,7 +127,7 @@ class MovementController extends Controller
             'support_date' => '2024-10-10T15:45:00.000Z', //$request->main["support_date"],
         ];
 
-        $validator = Validator::make(
+        $validatorMain = Validator::make(
             data: $dataMain,
             rules: [
                 'type_id' => [Rule::enum(MovementTypeId::class)],
@@ -140,7 +140,16 @@ class MovementController extends Controller
             ]
         );
 
-        return ($validator->fails()) ? "true " : "false" ;
+        $dataDetais = $request->details;
+
+        $validatorDetails = Validator::make($dataDetais, [
+            '*.id' => Rule::forEach(fn(string|null $value, string $attribute) => ['required', 'numeric']),
+            '*.int_cod' => Rule::forEach(fn(string|null $value, string $attribute) => ['required', 'string']),
+            '*.name' => Rule::forEach(fn(string|null $value, string $attribute) => ['required', 'string']),
+            '*.quantity' => Rule::forEach(fn(string|null $value, string $attribute) => ['required', 'numeric'])
+        ]);
+
+        return ($validatorDetails->fails()) ? "true " : "false" ;
 
     }
 
@@ -148,3 +157,21 @@ class MovementController extends Controller
 }
 
 
+/*
+$input = [
+    'user' => [
+        'name' => 'Taylor Otwell',
+        'username' => 'taylorotwell',
+        'admin' => true,
+    ],
+];
+ 
+Validator::make($input, [
+    'user' => 'array:name,username',
+]);
+
+[
+  {"id":2,"int_cod":"GKTFL5630427391","name":"ESSE","quantity":1},
+  {"id":3,"int_cod":"AOARQ5754980117","name":"IPSAM","quantity":1}
+]
+ */
