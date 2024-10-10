@@ -13,7 +13,7 @@ class MovementDetail extends Model
     //protected $connection = 'pgsql_store';
 
     protected $fillable = [
-        'id',     
+        //'id',     
         'movement_id',     
         'article_id',     
         'quantity',     

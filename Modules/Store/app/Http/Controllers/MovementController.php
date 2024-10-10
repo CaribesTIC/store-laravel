@@ -8,6 +8,7 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\{Request, JsonResponse};
 use Illuminate\Routing\Controller;
 use Modules\Store\Http\Resources\MovementResource;
+
     
 /*use Modules\Article\Http\Requests\Article\{
     StoreArticleRequest,
@@ -18,7 +19,7 @@ use Modules\Store\Http\Services\Movement\{
     //IndexArticleService,
     //UpdateArticleService
 };
-use Modules\Store\Entities\Movement;
+use Modules\Store\Entities\{ Movement, MovementDetail };
 
 enum MovementTypeId: string
 {
@@ -126,7 +127,6 @@ class MovementController extends Controller
             'support_number' => $request->main["support_number"],
             'support_date' => '2024-10-10T15:45:00.000Z', //$request->main["support_date"],
         ];
-
         $validatorMain = Validator::make(
             data: $dataMain,
             rules: [
@@ -140,38 +140,56 @@ class MovementController extends Controller
             ]
         );
 
+        if ($validatorMain->fails()) {
+            return "Error de Main";
+        }
+            
         $dataDetais = $request->details;
-
         $validatorDetails = Validator::make($dataDetais, [
-            '*.id' => Rule::forEach(fn(string|null $value, string $attribute) => ['required', 'numeric']),
-            '*.int_cod' => Rule::forEach(fn(string|null $value, string $attribute) => ['required', 'string']),
-            '*.name' => Rule::forEach(fn(string|null $value, string $attribute) => ['required', 'string']),
-            '*.quantity' => Rule::forEach(fn(string|null $value, string $attribute) => ['required', 'numeric'])
+            '*.id' =>  ['required', 'numeric'],
+            '*.int_cod' => ['required', 'string'],
+            '*.name' => ['required', 'string'],
+            '*.quantity'  => ['required', 'numeric']
         ]);
 
-        return ($validatorDetails->fails()) ? "true " : "false" ;
+        if ($validatorDetails->fails()) {
+            return "Error de Details";
+        }
 
+        $dataMainValidated = $validatorMain->validated();
+        $movement = new Movement;
+        $movement->type_id = $dataMainValidated['type_id'];
+        $movement->number = $dataMainValidated['number'];
+        $movement->date_time =  $dataMainValidated['date_time'];
+        $movement->subject =  $dataMainValidated['subject'];
+        $movement->description = $dataMain["description"];
+        $movement->observation = $dataMain['observation'];
+        $movement->support_type_id = $dataMainValidated['support_type_id'];
+        $movement->support_number = $dataMainValidated['support_number'];
+        $movement->support_date = $dataMainValidated['support_date'];
+        $movement->user_insert_id = \Illuminate\Support\Facades\Auth::user()->id;
+        $movement->user_update_id = \Illuminate\Support\Facades\Auth::user()->id;
+
+        $dataDetailsValidated = $validatorDetails->validated();      
+
+        $movementDetail = [];
+        for ($i = 0; $i < count($dataDetailsValidated); $i++) {
+            $movementDetail[$i] = new MovementDetail;
+            $movementDetail[$i]->article_id = $dataDetailsValidated[$i]['id'];
+            $movementDetail[$i]->quantity = $dataDetailsValidated[$i]['quantity']; 
+            $movementDetail[$i]->user_insert_id = \Illuminate\Support\Facades\Auth::user()->id;
+            $movementDetail[$i]->user_update_id = \Illuminate\Support\Facades\Auth::user()->id;
+        }
+
+        \Illuminate\Support\Facades\DB::transaction(function () use($movement, $movementDetail) {
+            $movement->save();
+            for ($i = 0; $i < count($movementDetail); $i++) {
+                $movementDetail[$i]->movement_id = $movement->id;
+                $movementDetail[$i]->save();           
+            }
+            //throw new \App\Exceptions\CustomException('Error: Levi Strauss & CO.', 501);
+        }, 5);
+
+        return "Exito" ;
     }
-
-
 }
-
-
-/*
-$input = [
-    'user' => [
-        'name' => 'Taylor Otwell',
-        'username' => 'taylorotwell',
-        'admin' => true,
-    ],
-];
- 
-Validator::make($input, [
-    'user' => 'array:name,username',
-]);
-
-[
-  {"id":2,"int_cod":"GKTFL5630427391","name":"ESSE","quantity":1},
-  {"id":3,"int_cod":"AOARQ5754980117","name":"IPSAM","quantity":1}
-]
- */
