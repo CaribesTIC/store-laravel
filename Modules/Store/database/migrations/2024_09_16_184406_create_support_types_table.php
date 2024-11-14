@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('support_types', function (Blueprint $table) {
             $table->id();
             $table->string('name', 30)->unique();
+            $table->integer('movement_type_id');
             $table->timestamps();
         });
     }
