@@ -13,7 +13,7 @@ class SupportTypesSeeder extends Seeder
     public function run(): void
     {
         // $this->call([]);
-        DB::statement("INSERT INTO public.support_types(name) VALUES ('ORDEN DE COMPRA')");
-        DB::statement("INSERT INTO public.support_types(name) VALUES ('FACTURA')");
+        DB::statement("INSERT INTO public.support_types(name, movement_type_id) VALUES ('ORDEN DE COMPRA', 1)");
+        DB::statement("INSERT INTO public.support_types(name, movement_type_id) VALUES ('FACTURA', 2)");
     }
 }

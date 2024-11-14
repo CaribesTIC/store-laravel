@@ -14,8 +14,10 @@ class ExistenceAction
      */
     public function index()
     {
-        $existence = DB::table('view_stock_movement')
-        ->join('articles', 'view_stock_movement.article_id', '=', 'articles.id')
+        // $existence = DB::table('view_stock_movement')
+        // ->join('articles', 'view_stock_movement.article_id', '=', 'articles.id')
+        $existence = DB::table('view_stocks')
+        ->join('articles', 'view_stocks.article_id', '=', 'articles.id')
         ->get();
 
         return response()->json($existence);
