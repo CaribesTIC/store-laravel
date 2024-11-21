@@ -54,7 +54,7 @@ class MovementTableSeeder extends Seeder
             'subject' => $faker->name,
             'description' => $faker->text(10),
             'observation' => $faker->text(10),
-            'support_type_id' => 1,
+            'support_type_id' => 4,
             'support_number' => '000000000X',
             'support_date' => date("Y-m-d H:i:s")
         ]);        
