@@ -4,7 +4,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Modules\Store\Http\Controllers\MovementController;
 use Modules\Store\Http\Controllers\MovementDetailController;
+use Modules\Store\Http\Controllers\DailyClosingController;
 use Modules\Store\Actions\ExistenceAction;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -65,4 +68,16 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::put('/{movement_detail}', [MovementDetailController::class, 'update']);
         Route::delete('/{id}', [MovementDetailController::class,'destroy']);
     });
+
+    Route::prefix('daily-closings')->group(function () { 
+        Route::get('/', [DailyClosingController::class, 'index']);
+    });
 });
+
+
+
+
+
+
+
+

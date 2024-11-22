@@ -1,14 +1,5 @@
 --
 /*
-php artisan module:make-migration create_daily_closings Store
-php artisan module:make-model DailyClosing Store
-
-php artisan module:make-migration create_monthly_closings Store 
-php artisan module:make-model MonthlyClosing Store
-
-php artisan module:make-migration create_annual_closings Store 
-php artisan module:make-model AnnualClosing Store
-
 CREATE TABLE public.cierre_diario (
     id integer NOT NULL,
     id_presentacion integer NOT NULL,
@@ -47,6 +38,16 @@ CREATE TABLE public.cierre_anual (
     date_insert date DEFAULT ('now'::text)::date NOT NULL,
     time_insert time(0) without time zone DEFAULT ('now'::text)::time without time zone NOT NULL
 );
+
+php artisan module:make-migration create_daily_closings Store
+php artisan module:make-model DailyClosing Store
+
+php artisan module:make-migration create_monthly_closings Store 
+php artisan module:make-model MonthlyClosing Store
+
+php artisan module:make-migration create_annual_closings Store 
+php artisan module:make-model AnnualClosing Store
+
 --
 CREATE TABLE public.soporte_tipo (
     id integer NOT NULL,
@@ -136,13 +137,13 @@ CREATE VIEW public.view_existencia_movimiento AS
 
 ---
 
-/*CREATE VIEW public.view_cierre_mov_fec_presentacion AS
- SELECT DISTINCT b.movimiento_fec,
-    a.id_presentacion
-   FROM (public.movimiento_aux a
-     LEFT JOIN public.movimiento b ON ((a.id_movimiento = b.id)))
-  WHERE ((a.cierre_fec IS NULL) AND (b.cierre_fec IS NULL))
-  ORDER BY b.movimiento_fec, a.id_presentacion;*/
+/*-CREATE VIEW public.view_cierre_mov_fec_presentacion AS
+ -SELECT DISTINCT b.movimiento_fec,
+ -   a.id_presentacion
+ -  FROM (public.movimiento_aux a
+ -    LEFT JOIN public.movimiento b ON ((a.id_movimiento = b.id)))
+ - WHERE ((a.cierre_fec IS NULL) AND (b.cierre_fec IS NULL))
+ - ORDER BY b.movimiento_fec, a.id_presentacion;*/
   
  CREATE VIEW public.view_clousure_mov_date_time_article AS
  SELECT DISTINCT b.date_time,
@@ -358,60 +359,61 @@ END;
 $$;
 
 ---
+---
+---
+---
 
 
-CREATE FUNCTION public.cierre_diario(i_fec_desde date, i_fec_hasta date, i_id_user integer) RETURNS character
-    LANGUAGE plpgsql
-    AS $$
-DECLARE
-        o_return character;
-        v_fecha date;        
-BEGIN
-	o_return:='Z';
-        IF (SELECT public.cierre_diario_fechas_validas(i_fec_desde, i_fec_hasta)) THEN
-		v_fecha = i_fec_desde;
-		WHILE v_fecha <= i_fec_hasta LOOP
-			IF  (SELECT public.cierre_diario_fecha_existe(v_fecha)) THEN
-			        SELECT public.cierre_diario_register(v_fecha, i_id_user) INTO o_return;				
-			END IF;
-			SELECT ( v_fecha + interval '1 day') INTO v_fecha; 
-		END LOOP;
-	END IF;  
-	
-	RETURN o_return;
-	
-END;
-$$;
-
---
-
-
-CREATE FUNCTION public.cierre_diario_fecha_existe(i_fecha date) RETURNS boolean
-    LANGUAGE plpgsql
-    AS $$
-BEGIN
-
-        RETURN (SELECT CASE WHEN count(*)=0 THEN false ELSE true END 
-		FROM public.movimiento 
-			WHERE cierre_fec IS NULL AND movimiento_fec = i_fecha);
-
-END;
-$$;
+--CREATE FUNCTION public.cierre_diario(i_fec_desde date, i_fec_hasta date, i_id_user integer) RETURNS character
+--    LANGUAGE plpgsql
+--    AS $$
+--DECLARE
+--        o_return character;
+--        v_fecha date;        
+--BEGIN
+--	o_return:='Z';
+--       IF (SELECT public.cierre_diario_fechas_validas(i_fec_desde, i_fec_hasta)) THEN
+--		v_fecha = i_fec_desde;
+--		WHILE v_fecha <= i_fec_hasta LOOP
+--			IF  (SELECT public.cierre_diario_fecha_existe(v_fecha)) THEN
+--			        SELECT public.cierre_diario_register(v_fecha, i_id_user) INTO o_return;				
+--			END IF;
+--			SELECT ( v_fecha + interval '1 day') INTO v_fecha; 
+--		END LOOP;
+--	END IF;  
+--	
+--	RETURN o_return;
+--	
+--END;
+--$$;
 
 --
 
-CREATE FUNCTION public.cierre_diario_fechas_validas(i_fecha_desde date, i_fecha_hasta date) RETURNS boolean
-    LANGUAGE plpgsql
-    AS $$
-BEGIN
-        RETURN (i_fecha_desde = (SELECT min(movimiento_fec) FROM public.movimiento WHERE cierre_fec IS NULL)) 
-               AND 
-               (i_fecha_hasta <= now());
-END;
-$$;
+--CREATE FUNCTION public.cierre_diario_fechas_validas(i_fecha_desde date, i_fecha_hasta date) RETURNS boolean
+--    LANGUAGE plpgsql
+--    AS $$
+--BEGIN
+--        RETURN (i_fecha_desde = (SELECT min(movimiento_fec) FROM public.movimiento WHERE cierre_fec IS NULL)) 
+--               AND 
+--               (i_fecha_hasta <= now());
+--END;
+--$$;
 
 --
 
+--CREATE FUNCTION public.cierre_diario_fecha_existe(i_fecha date) RETURNS boolean
+--    LANGUAGE plpgsql
+--    AS $$
+--BEGIN
+--
+--        RETURN (SELECT CASE WHEN count(*)=0 THEN false ELSE true END 
+--		FROM public.movimiento 
+--			WHERE cierre_fec IS NULL AND movimiento_fec = i_fecha);
+--
+--END;
+--$$;
+
+--
 
 CREATE FUNCTION public.cierre_diario_register(i_fecha date, i_id_user integer) RETURNS character
     LANGUAGE plpgsql
@@ -469,21 +471,102 @@ END;
 $$;
 
 
+-------------
+
+select
+  close,
+  sum(quantity_input) as quantity_input,
+  sum(quantity_output) as quantity_output,
+  sum(quantity_reverse_input) as quantity_reverse_input,
+  sum(quantity_reverse_output) as quantity_reverse_output  
+from public.close_days
+group by close;
 
 
-
+---------------------
   
-  
+
+CREATE OR REPLACE FUNCTION public.daily_closing(i_date_from date, i_date_to date, i_user_id integer) RETURNS boolean
+    LANGUAGE plpgsql
+    AS $$
+DECLARE
+        o_return boolean;
+        v_date date;        
+BEGIN
+	o_return:=false;
+        IF (SELECT public.daily_closing_valid_dates(i_date_from, i_date_to)) THEN
+		v_date = i_date_from;
+		WHILE v_date <= i_date_to LOOP
+			IF  (SELECT public.daily_closing_date_exists(v_date)) THEN
+			        SELECT public.daily_closing_register(v_date, i_user_id) INTO o_return;				
+			END IF;
+			SELECT ( v_date + interval '1 day') INTO v_date; 
+		END LOOP;
+	END IF;  
+	
+	RETURN o_return;
+	
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION public.daily_closing_valid_dates(i_date_from date, i_date_to date) RETURNS boolean
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+        RETURN (i_date_from = (SELECT min(date_time::date) FROM public.movements WHERE close IS NULL)) 
+               AND 
+               (i_date_to <= now());
+END;
+$$;
 
 
+CREATE OR REPLACE FUNCTION public.daily_closing_date_exists(i_date date) RETURNS boolean
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+
+        RETURN (SELECT CASE WHEN count(*)=0 THEN false ELSE true END 
+		FROM public.movements 
+			WHERE close IS NULL AND date_time::date = i_date);
+
+END;
+$$;
 
 
+CREATE OR REPLACE FUNCTION public.daily_closing_register(i_date date, i_user_id integer) RETURNS boolean
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+	INSERT INTO public.close_days(
+		article_id, 
+		quantity_input, 
+		quantity_output, 
+		quantity_reverse_input, 
+		quantity_reverse_output, 
+		close, 
+		id_user_insert
+	) SELECT article_id, 
+		quantity_input, 
+		quantity_output,
+		quantity_reverse_input, 
+		quantity_reverse_output, 
+		i_date, 
+		i_user_id
+		FROM view_closure_pre_insert
+		WHERE date_time::date = i_date;		
+		
+	UPDATE public.movements SET close = now()
+		WHERE date_time::date = i_date;
+		
+	UPDATE public.movement_details SET close = now()
+		WHERE movement_id IN (SELECT id FROM public.movements WHERE date_time::date = i_date);
+		
+	RETURN true;
+END;
+$$;
 
+select public.daily_closing_register('2024-11-22', 1) 
 
-
-
-
-
-
+select public.daily_closing('2024-11-22', '2024-11-22', 1)
 
 
