@@ -284,32 +284,54 @@ CREATE VIEW public.view_presentacion_cantidad_salida AS
   
 --
 
-/*CREATE VIEW public.view_existencia_cierre_diario AS
- SELECT b.categoria,
-    b.producto,
-    b.marca,
-    a.id_presentacion,
-    ( SELECT public.view_presentacion_despliegue(a.id_presentacion) AS view_presentacion_despliegue) AS presentacion,
+/*--CREATE VIEW public.view_existencia_cierre_diario AS
+ --SELECT b.categoria,
+ --   b.producto,
+ --   b.marca,
+ --   a.id_presentacion,
+ --   ( SELECT public.view_presentacion_despliegue(a.id_presentacion) AS view_presentacion_despliegue) AS presentacion,
+ --       CASE
+ --           WHEN (a.cantidad_entrante IS NULL) THEN 0
+ --           ELSE a.cantidad_entrante
+ --       END AS entradas,
+ --       CASE
+ --           WHEN (a.cantidad_saliente IS NULL) THEN 0
+ --           ELSE a.cantidad_saliente
+ --       END AS salidas,
+ --       CASE
+ --           WHEN (a.cantidad_reverso_entrante IS NULL) THEN 0
+ --           ELSE a.cantidad_reverso_entrante
+ --       END AS reverso_entradas,
+ --       CASE
+ --           WHEN (a.cantidad_reverso_saliente IS NULL) THEN 0
+ --           ELSE a.cantidad_reverso_saliente
+ --       END AS reverso_salidas,
+ --   ((COALESCE(a.cantidad_entrante, 0) - COALESCE(a.cantidad_reverso_entrante, 0)) - (COALESCE(a.cantidad_saliente, 0) - COALESCE(a.cantidad_reverso_saliente, 0))) AS total
+ --  FROM (public.cierre_diario a
+ --    JOIN public.view_presentacion b ON ((a.id_presentacion = b.id)))
+ -- WHERE true;*/
+
+CREATE VIEW public.view_existence_daily_closing AS
+ SELECT a.article_id,
         CASE
-            WHEN (a.cantidad_entrante IS NULL) THEN 0
-            ELSE a.cantidad_entrante
+            WHEN (a.quantity_input IS NULL) THEN 0
+            ELSE a.quantity_input
         END AS entradas,
         CASE
-            WHEN (a.cantidad_saliente IS NULL) THEN 0
-            ELSE a.cantidad_saliente
+            WHEN (a.quantity_output IS NULL) THEN 0
+            ELSE a.quantity_output
         END AS salidas,
         CASE
-            WHEN (a.cantidad_reverso_entrante IS NULL) THEN 0
-            ELSE a.cantidad_reverso_entrante
+            WHEN (a.quantity_reverse_input IS NULL) THEN 0
+            ELSE a.quantity_reverse_input
         END AS reverso_entradas,
         CASE
-            WHEN (a.cantidad_reverso_saliente IS NULL) THEN 0
-            ELSE a.cantidad_reverso_saliente
+            WHEN (a.quantity_reverse_output IS NULL) THEN 0
+            ELSE a.quantity_reverse_output
         END AS reverso_salidas,
-    ((COALESCE(a.cantidad_entrante, 0) - COALESCE(a.cantidad_reverso_entrante, 0)) - (COALESCE(a.cantidad_saliente, 0) - COALESCE(a.cantidad_reverso_saliente, 0))) AS total
-   FROM (public.cierre_diario a
-     JOIN public.view_presentacion b ON ((a.id_presentacion = b.id)))
-  WHERE true;*/
+    ((COALESCE(a.quantity_input, 0) - COALESCE(a.quantity_reverse_input, 0)) - (COALESCE(a.quantity_output, 0) - COALESCE(a.quantity_reverse_output, 0))) AS total
+   FROM public.close_days a
+  WHERE true;
   
   
   CREATE VIEW public.view_existence_close_days AS
