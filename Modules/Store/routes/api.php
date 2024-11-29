@@ -71,11 +71,17 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::prefix('daily-closings')->group(function () { 
         Route::get('/', [DailyClosingController::class, 'index']);
+        Route::get('/pre', [DailyClosingController::class, 'getPreDailyClosing']);
+
     });
 });
 
 
-
+Route::prefix('daily-closings')->group(function () { 
+    Route::get('/', [DailyClosingController::class, 'index']);
+    Route::get('/pre', [DailyClosingController::class, 'getPreDailyClosing']);
+    Route::post('/', [DailyClosingController::class, 'store']);
+});
 
 
 
