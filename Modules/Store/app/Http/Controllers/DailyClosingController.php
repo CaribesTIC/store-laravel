@@ -5,6 +5,7 @@ namespace Modules\Store\Http\Controllers;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\{Request, JsonResponse};
 use Illuminate\Routing\Controller;
+use DB;
 //use Modules\Store\Entities\Movement;
 //use Modules\Store\Http\Resources\MovementResource;
 use Modules\Store\Http\Services\DailyClosing\{ IndexDailyClosingService };
@@ -16,6 +17,39 @@ class DailyClosingController extends Controller
     {
         return IndexDailyClosingService::execute($request);
     }
+
+    public function getPreDailyClosing(): JsonResponse
+    {
+
+
+        $query = DB::table('view_closure_pre_insert')
+        ->selectRaw(
+            'date_time,
+            article_id,
+            articles.int_cod,
+            articles.name,
+            quantity_input,
+            quantity_output,
+            quantity_reverse_input,
+            quantity_reverse_output'
+        )
+        ->join('articles', 'article_id', '=', 'articles.id')
+        ->get();
+
+        return response()->json($query);
+
+    }
+
+    public function store(Request $request): JsonResponse
+    {
+        $date = $request->date;
+        $result = DB::select("select daily_closing(?,?,?)", array($date, $date, 1));
+        return response()->json($result);
+
+        
+
+        //return StoreMovementService::execute($request, $typeId);        
+    }
     
     /*public function show(Movement $movement, Request $request): MovementResource | JsonResponse    
     {//return response()->json($movement);
@@ -23,8 +57,5 @@ class DailyClosingController extends Controller
     }
 
     //public function store(StoreArticleRequest $request): JsonResponse
-    public function store(Request $request, string $typeId): JsonResponse
-    {
-        return StoreMovementService::execute($request, $typeId);        
-    }*/
+    */
 }
