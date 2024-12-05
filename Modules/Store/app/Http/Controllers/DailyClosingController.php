@@ -26,13 +26,14 @@ class DailyClosingController extends Controller
             article_id,
             articles.int_cod,
             articles.name,
-            quantity_input,
-            quantity_output,
-            quantity_reverse_input,
-            quantity_reverse_output'
+            sum(quantity_input) as quantity_input, 
+            sum(quantity_output) as quantity_output, 
+            sum(quantity_reverse_input) as quantity_reverse_input, 
+            sum(quantity_reverse_output) as quantity_reverse_output'
         )
         ->join('articles', 'article_id', '=', 'articles.id')
         ->where('close', $request->close)
+        ->groupBy('close', 'article_id', 'articles.int_cod', 'articles.name')
         ->get();
 
         return response()->json($query);
