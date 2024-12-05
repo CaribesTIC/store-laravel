@@ -60,7 +60,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('/existences', [ExistenceAction::class, 'index'] );
 
-
     Route::prefix('movement_details')->group(function () {  
         Route::get('/{movementId}', [MovementDetailController::class, 'getAllByMovement']);
         Route::get('/{movement_detail}', [MovementDetailController::class, 'show']);
@@ -72,18 +71,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::prefix('daily-closings')->group(function () { 
         Route::get('/', [DailyClosingController::class, 'index']);
         Route::get('/pre', [DailyClosingController::class, 'getPreDailyClosing']);
-
+        Route::get('/{close}', [DailyClosingController::class, 'show']);
+        Route::post('/', [DailyClosingController::class, 'store']);
     });
 });
-
-
-Route::prefix('daily-closings')->group(function () { 
-    Route::get('/', [DailyClosingController::class, 'index']);
-    Route::get('/pre', [DailyClosingController::class, 'getPreDailyClosing']);
-    Route::post('/', [DailyClosingController::class, 'store']);
-});
-
-
-
-
-

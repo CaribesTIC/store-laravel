@@ -17,14 +17,16 @@ class IndexDailyClosingService
     static public function execute(Request $request): JsonResponse 
     {
         /* Initialize query */
-        $query = DailyClosing::selectRaw(
+        /*$query = DailyClosing::selectRaw(
             'close, 
             sum(quantity_input) as quantity_input, 
             sum(quantity_output) as quantity_output, 
             sum(quantity_reverse_input) as quantity_reverse_input, 
             sum(quantity_reverse_output) as quantity_reverse_output'
         )
-        ->groupBy('close');
+        ->groupBy('close');*/
+
+        $query = DailyClosing::select('close')->groupBy('close');
 
 
         /* search */
