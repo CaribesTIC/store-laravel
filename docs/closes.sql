@@ -592,3 +592,66 @@ select public.daily_closing_register('2024-11-22', 1)
 select public.daily_closing('2024-11-22', '2024-11-22', 1)
 
 
+
+
+
+
+NEW
+
+select 
+  a.close, 
+  a.article_id, 
+  sum(a.total) as accumulator, 
+  COALESCE(b.inputs, 0::bigint) as inputs, 
+  COALESCE(b.outputs, 0::bigint) as outputs,
+  (sum(a.total) + COALESCE(b.inputs, 0::bigint)) - COALESCE(b.outputs, 0::bigint) as total
+from view_stock_close_day_by_day a 
+left join view_stock_movement b
+on b.article_id=a.article_id
+group by a.close, a.article_id, b.inputs, b.outputs
+
+select * from view_stock_movement
+
+
+select * from view_stock_close_day_by_day
+
+
+//////////
+
+-- View: public.view_stock_close_day_by_day
+
+-- DROP VIEW public.view_stock_close_day_by_day;
+
+CREATE OR REPLACE VIEW public.view_stock_close_day_by_day
+ AS
+ SELECT a.close,
+    a.article_id,
+        CASE
+            WHEN a.quantity_input IS NULL THEN 0
+            ELSE a.quantity_input
+        END AS inputs,
+        CASE
+            WHEN a.quantity_output IS NULL THEN 0
+            ELSE a.quantity_output
+        END AS outputs,
+        CASE
+            WHEN a.quantity_reverse_input IS NULL THEN 0
+            ELSE a.quantity_reverse_input
+        END AS reverse_inputs,
+        CASE
+            WHEN a.quantity_reverse_output IS NULL THEN 0
+            ELSE a.quantity_reverse_output
+        END AS reverse_outputs,
+    COALESCE(a.quantity_input, 0) - COALESCE(a.quantity_reverse_input, 0) - (COALESCE(a.quantity_output, 0) - COALESCE(a.quantity_reverse_output, 0)) AS total
+   FROM ( SELECT close_days.id,
+            close_days.article_id,
+            close_days.quantity_input,
+            close_days.quantity_output,
+            close_days.quantity_reverse_input,
+            close_days.quantity_reverse_output,
+            close_days.close
+           FROM close_days) a
+  WHERE true;
+
+ALTER TABLE public.view_stock_close_day_by_day
+    OWNER TO postgres;
