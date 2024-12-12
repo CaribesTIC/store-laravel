@@ -702,32 +702,30 @@ ALTER TABLE public.view_stock_close_day_by_day
          ) alias
   GROUP BY article_id;
   
-  
-  
-  
-  
-  -- View: public.view_test_other
+12-12-2024
 
--- DROP VIEW public.view_test_other;
+-- View: public.view_total_articles_by_daily_closing
 
-CREATE OR REPLACE VIEW public.view_test_other
+-- DROP VIEW public.view_total_articles_by_daily_closing;
+
+CREATE OR REPLACE VIEW public.view_total_articles_by_daily_closing
  AS
  SELECT article_id,
-    sum(total) AS subtotal
+    sum(total) AS total
    FROM ( SELECT view_stock_close_day.article_id,
             view_stock_close_day.total
            FROM view_stock_close_day) alias
   GROUP BY article_id;
 
-ALTER TABLE public.view_test_other
+ALTER TABLE public.view_total_articles_by_daily_closing
     OWNER TO postgres;
-    
-  
--- View: public.view_test
 
--- DROP VIEW public.view_test;
 
-CREATE OR REPLACE VIEW public.view_test
+-- View: public.view_articles_sum_by_unclosed_movements
+
+-- DROP VIEW public.view_articles_sum_by_unclosed_movements;
+
+CREATE OR REPLACE VIEW public.view_articles_sum_by_unclosed_movements
  AS
  SELECT article_id,
     sum(inputs) AS inputs,
@@ -744,9 +742,34 @@ CREATE OR REPLACE VIEW public.view_test
            FROM view_stock_movement) alias
   GROUP BY article_id;
 
-ALTER TABLE public.view_test
+ALTER TABLE public.view_articles_sum_by_unclosed_movements
     OWNER TO postgres;
 
- 
-select a.article_id, a.subtotal, inputs, outputs, ((a.subtotal+inputs) - outputs) as totales
-from view_test_other a left join view_test b on a.article_id=b.article_id
+
+-- View: public.view_stocks_by_accumulated_plus_unclosed_movements
+
+-- DROP VIEW public.view_stocks_by_accumulated_plus_unclosed_movements;
+
+CREATE OR REPLACE VIEW public.view_stocks_by_accumulated_plus_unclosed_movements
+ AS
+ SELECT a.id,
+    a.int_cod,
+    a.name,
+    COALESCE(b.total, 0::bigint) AS accumulated,
+    COALESCE(c.inputs, 0::numeric) AS inputs,
+    COALESCE(c.outputs, 0::numeric) AS outputs,
+    COALESCE(c.reverse_inputs, 0::numeric) AS reverse_inputs,
+    COALESCE(c.reverse_outputs, 0::numeric) AS reverse_outputs,
+    COALESCE(b.total, 0::bigint)::numeric + (COALESCE(c.inputs, 0::numeric) - COALESCE(c.reverse_inputs, 0::numeric)) - (COALESCE(c.outputs, 0::numeric) - COALESCE(c.reverse_outputs, 0::numeric)) AS stock_current,
+    a.stock_min,
+    a.stock_max
+   FROM articles a
+     LEFT JOIN view_total_articles_by_daily_closing b ON b.article_id = a.id
+     LEFT JOIN view_articles_sum_by_unclosed_movements c ON c.article_id = a.id
+  ORDER BY a.id;
+
+ALTER TABLE public.view_stocks_by_accumulated_plus_unclosed_movements
+    OWNER TO postgres;
+
+
+
