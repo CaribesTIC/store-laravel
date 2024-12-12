@@ -655,3 +655,98 @@ CREATE OR REPLACE VIEW public.view_stock_close_day_by_day
 
 ALTER TABLE public.view_stock_close_day_by_day
     OWNER TO postgres;
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    ---> let's go here
+    
+    SELECT article_id,
+    sum(inputs) AS inputs,
+    sum(outputs) AS outputs,
+    sum(reverse_inputs) AS reverse_inputs,
+    sum(reverse_outputs) AS reverse_outputs,
+    sum(total) AS total
+   FROM ( 
+         SELECT view_stock_close_day.article_id,
+            view_stock_close_day.inputs,
+            view_stock_close_day.outputs,
+            view_stock_close_day.reverse_inputs,
+            view_stock_close_day.reverse_outputs,
+            view_stock_close_day.total
+           FROM view_stock_close_day) alias
+  GROUP BY article_id;
+
+  SELECT article_id,
+    sum(inputs) AS inputs,
+    sum(outputs) AS outputs,
+    sum(reverse_inputs) AS reverse_inputs,
+    sum(reverse_outputs) AS reverse_outputs,
+    sum(total) AS total
+   FROM ( SELECT view_stock_movement.article_id,
+            view_stock_movement.inputs,
+            view_stock_movement.outputs,
+            view_stock_movement.reverse_inputs,
+            view_stock_movement.reverse_outputs,
+            view_stock_movement.total
+           FROM view_stock_movement
+         ) alias
+  GROUP BY article_id;
+  
+  
+  
+  
+  
+  -- View: public.view_test_other
+
+-- DROP VIEW public.view_test_other;
+
+CREATE OR REPLACE VIEW public.view_test_other
+ AS
+ SELECT article_id,
+    sum(total) AS subtotal
+   FROM ( SELECT view_stock_close_day.article_id,
+            view_stock_close_day.total
+           FROM view_stock_close_day) alias
+  GROUP BY article_id;
+
+ALTER TABLE public.view_test_other
+    OWNER TO postgres;
+    
+  
+-- View: public.view_test
+
+-- DROP VIEW public.view_test;
+
+CREATE OR REPLACE VIEW public.view_test
+ AS
+ SELECT article_id,
+    sum(inputs) AS inputs,
+    sum(outputs) AS outputs,
+    sum(reverse_inputs) AS reverse_inputs,
+    sum(reverse_outputs) AS reverse_outputs,
+    sum(total) AS total
+   FROM ( SELECT view_stock_movement.article_id,
+            view_stock_movement.inputs,
+            view_stock_movement.outputs,
+            view_stock_movement.reverse_inputs,
+            view_stock_movement.reverse_outputs,
+            view_stock_movement.total
+           FROM view_stock_movement) alias
+  GROUP BY article_id;
+
+ALTER TABLE public.view_test
+    OWNER TO postgres;
+
+ 
+select a.article_id, a.subtotal, inputs, outputs, ((a.subtotal+inputs) - outputs) as totales
+from view_test_other a left join view_test b on a.article_id=b.article_id
