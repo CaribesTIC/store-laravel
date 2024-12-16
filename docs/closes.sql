@@ -702,7 +702,6 @@ ALTER TABLE public.view_stock_close_day_by_day
          ) alias
   GROUP BY article_id;
   
-12-12-2024
 
 -- View: public.view_total_articles_by_daily_closing
 
@@ -773,3 +772,36 @@ ALTER TABLE public.view_stocks_by_accumulated_plus_unclosed_movements
 
 
 
+16-12-2024
+
+SELECT a.article_id,
+    COALESCE(a.quantity_input, 0) AS inputs,
+    COALESCE(a.quantity_output, 0) AS outputs,
+    COALESCE(a.quantity_reverse_input, 0) AS reverse_inputs,
+    COALESCE(a.quantity_reverse_output, 0) AS reverse_outputs,
+    COALESCE(a.quantity_input, 0) - COALESCE(a.quantity_reverse_input, 0) - (COALESCE(a.quantity_output, 0) - COALESCE(a.quantity_reverse_output, 0)) AS total,
+    a.close
+   FROM ( SELECT close_days.id,
+            close_days.article_id,
+            close_days.quantity_input,
+            close_days.quantity_output,
+            close_days.quantity_reverse_input,
+            close_days.quantity_reverse_output,
+            close_days.close
+           FROM close_days) a
+  WHERE true;
+
+ SELECT alias.article_id,
+    sum(alias.total) AS total, close
+   FROM ( SELECT view_stock_close_day_test.article_id,
+            view_stock_close_day_test.total, close
+           FROM view_stock_close_day_test) alias
+		WHERE close='2024-12-16'
+  GROUP BY alias.article_id, close;
+
+   SELECT alias.article_id,
+    sum(alias.total) AS total
+   FROM ( SELECT view_stock_close_day_test.article_id,
+            view_stock_close_day_test.total
+           FROM view_stock_close_day_test WHERE close='2024-12-16') alias		 
+  GROUP BY alias.article_id ;

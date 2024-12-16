@@ -102,14 +102,6 @@ class MenuSeeder extends Seeder
             "icon" => "printer",
             "sort" => 4
         ]);
-
-        Menu::create([ // id 11
-            "title" => "Menus",
-            "menu_id" => 11,
-            "path" => "menus",
-            "icon" => "menus.svg",
-            "sort" => 1
-        ]);
         
         Menu::create([ // id 12
             "title" => "Artículos",
@@ -142,6 +134,14 @@ class MenuSeeder extends Seeder
             "icon" => "products.svg",
             "sort" => 5
         ]);
+        
+        Menu::create([ // id 17
+            "title" => "Users",
+            "menu_id" => 11,
+            "path" => "users",
+            "icon" => "user.svg",
+            "sort" => 7
+        ]);
 
         Menu::create([ // id 16
             "title" => "Roles",
@@ -150,13 +150,13 @@ class MenuSeeder extends Seeder
             "icon" => "users.svg",
             "sort" => 6
         ]);
-        
-        Menu::create([ // id 17
-            "title" => "Users",
+
+        Menu::create([ // id 18
+            "title" => "Menus",
             "menu_id" => 11,
-            "path" => "users",
-            "icon" => "user.svg",
-            "sort" => 7
+            "path" => "menus",
+            "icon" => "menus.svg",
+            "sort" => 1
         ]);
 
     }
