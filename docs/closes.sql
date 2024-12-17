@@ -771,9 +771,6 @@ ALTER TABLE public.view_stocks_by_accumulated_plus_unclosed_movements
     OWNER TO postgres;
 
 
-
-16-12-2024
-
 SELECT a.article_id,
     COALESCE(a.quantity_input, 0) AS inputs,
     COALESCE(a.quantity_output, 0) AS outputs,
@@ -805,3 +802,44 @@ SELECT a.article_id,
             view_stock_close_day_test.total
            FROM view_stock_close_day_test WHERE close='2024-12-16') alias		 
   GROUP BY alias.article_id ;
+
+
+
+17-12-2024
+
+    select view_stock_close_day_test_2.article_id,
+    sum(view_stock_close_day_test_2.total) AS total from view_stock_close_day_test_2 where close = '2024-12-14'
+	GROUP BY view_stock_close_day_test_2.article_id
+
+  select view_stock_close_day_test_2.article_id,
+    sum(view_stock_close_day_test_2.total) AS total from view_stock_close_day_test_2 where close = '2024-12-15'
+	GROUP BY view_stock_close_day_test_2.article_id
+
+	  select view_stock_close_day_test_2.article_id,
+    sum(view_stock_close_day_test_2.total) AS total from view_stock_close_day_test_2 where close = '2024-12-16'
+	GROUP BY view_stock_close_day_test_2.article_id
+
+    select alias.*, view_stock_close_day_test.*, alias.acumulado+view_stock_close_day_test.total as tt
+	from view_stock_close_day_test
+	left join (
+      select view_stock_close_day_test_2.article_id,
+      sum(view_stock_close_day_test_2.total) AS acumulado from view_stock_close_day_test_2 where
+	  close >= '2024-12-14' and close < '2024-12-16'  
+	  GROUP BY view_stock_close_day_test_2.article_id
+	) alias on view_stock_close_day_test.article_id = alias.article_id
+	where close = '2024-12-16'
+
+
+
+	select * from articles
+	inner join 
+	(select alias.acumulado, view_stock_close_day_test.*, alias.acumulado+view_stock_close_day_test.total as tt
+	from view_stock_close_day_test
+	left join (
+      select view_stock_close_day_test_2.article_id,
+      sum(view_stock_close_day_test_2.total) AS acumulado from view_stock_close_day_test_2 where
+	  close >= '2024-12-14' and close < '2024-12-16'  
+	  GROUP BY view_stock_close_day_test_2.article_id
+	) alias on view_stock_close_day_test.article_id = alias.article_id
+	where close = '2024-12-16') as b
+	on articles.id = b.article_id
