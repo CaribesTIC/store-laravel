@@ -17,46 +17,106 @@ class MovementTableSeeder extends Seeder
     public function run()
     {
         Model::unguard();        
-
-        // $this->call("OthersTableSeeder");
-        //DB::statement("INSERT INTO public.movements	VALUES (1, 1, '0001', NOW(), 'XYZ', 'XYZ XYZ XYZ', 'XYZ XYZ XYZ', NULL, '0001', NOW())");
-        
         $faker = \Faker\Factory::create();
+        $today = date("Y-m-d");        
         
         Movement::create([
             'type_id' => 1,
-            'number' => '1',
-            'date_time' => date("Y-m-d H:i:s"),
+           // 'number' => '1',
+            'date_time' => date("Y-m-d H:i:s", strtotime($today."- 3 days")),
             'subject' => $faker->name,
             'description' => $faker->text(10),
             'observation' => $faker->text(10),
             'support_type_id' => 1,
-            'support_number' => '000000000X',
-            'support_date' => date("Y-m-d H:i:s")
+            'support_number' => '000000000Z',
+            'support_date' => date("Y-m-d H:i:s", strtotime($today."- 3 days"))
         ]);
 
         Movement::create([
             'type_id' => 1,
-            'number' => '2',
-            'date_time' => date("Y-m-d H:i:s"),
+            //'number' => '2',
+            'date_time' => date("Y-m-d H:i:s", strtotime($today."- 3 days")),
             'subject' => $faker->name,
             'description' => $faker->text(10),
             'observation' => $faker->text(10),                        
             'support_type_id' => 1,
             'support_number' => '000000000Y',
-            'support_date' => date("Y-m-d H:i:s")
+            'support_date' => date("Y-m-d H:i:s", strtotime($today."- 3 days"))
         ]);
         
         Movement::create([
             'type_id' => 2,
-            'number' => '3',
-            'date_time' => date("Y-m-d H:i:s"),
+            //'number' => '3',
+            'date_time' => date("Y-m-d H:i:s", strtotime($today."- 3 days")),
             'subject' => $faker->name,
             'description' => $faker->text(10),
             'observation' => $faker->text(10),
             'support_type_id' => 4,
             'support_number' => '000000000X',
-            'support_date' => date("Y-m-d H:i:s")
-        ]);        
+            'support_date' => date("Y-m-d H:i:s", strtotime($today."- 3 days"))
+        ]);
+        
+        //////////////////////////////////////////////////////////////////////
+
+        Movement::create([
+            'type_id' => 3,
+           // 'number' => '4',
+            'date_time' => date("Y-m-d H:i:s", strtotime($today."- 2 days")),
+            'subject' => $faker->name,
+            'description' => $faker->text(10),
+            'observation' => $faker->text(10),
+            'support_type_id' => 1,
+            'support_number' => '0000000002',
+            'support_date' => date("Y-m-d H:i:s", strtotime($today."- 2 days"))
+        ]);
+    
+        Movement::create([
+            'type_id' => 2,
+            //'number' => '5',
+            'date_time' => date("Y-m-d H:i:s", strtotime($today."- 2 days")),
+            'subject' => $faker->name,
+            'description' => $faker->text(10),
+            'observation' => $faker->text(10),
+            'support_type_id' => 4,
+            'support_number' => '000000000W',
+            'support_date' => date("Y-m-d H:i:s", strtotime($today."- 2 days"))
+        ]);
+
+        //////////////////////////////////////////////////////////////////////
+
+        Movement::create([
+            'type_id' => 4,
+            // 'number' => '6',
+            'date_time' => date("Y-m-d H:i:s", strtotime($today."- 1 days")),
+            'subject' => $faker->name,
+            'description' => $faker->text(10),
+            'observation' => $faker->text(10),
+            'support_type_id' => 4,
+            'support_number' => '000000000X',
+            'support_date' => date("Y-m-d H:i:s", strtotime($today."- 1 days"))
+        ]);
+        Movement::create([
+            'type_id' => 2,
+            //'number' => '7',
+            'date_time' => date("Y-m-d H:i:s", strtotime($today."- 1 days")),
+            'subject' => $faker->name,
+            'description' => $faker->text(10),
+            'observation' => $faker->text(10),                        
+            'support_type_id' => 1,
+            'support_number' => '000000000Y',
+            'support_date' => date("Y-m-d H:i:s", strtotime($today."- 1 days"))
+        ]);
+        
+        Movement::create([
+            'type_id' => 1,
+            //'number' => '8',
+            'date_time' => date("Y-m-d H:i:s", strtotime($today."- 1 days")),
+            'subject' => $faker->name,
+            'description' => $faker->text(10),
+            'observation' => $faker->text(10),
+            'support_type_id' => 4,
+            'support_number' => '000000000X',
+            'support_date' => date("Y-m-d H:i:s", strtotime($today."- 1 days"))
+        ]);
     }
 }
