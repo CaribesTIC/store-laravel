@@ -26,6 +26,7 @@ class DailyClosingController extends Controller
             article_id,
             articles.int_cod,
             articles.name,
+            sum(accumulated) as accumulated,
             sum(quantity_input) as quantity_input, 
             sum(quantity_output) as quantity_output, 
             sum(quantity_reverse_input) as quantity_reverse_input, 
@@ -61,9 +62,16 @@ class DailyClosingController extends Controller
 
     public function store(Request $request): JsonResponse
     {
-        $date = $request->date;
-        $result = DB::select("select daily_closing(?,?,?)", array($date, $date, 1));
-        return response()->json($result);
+
+
+        //try {
+            $date = $request->date;
+            $result = DB::select("select daily_closing(?,?,?)", array($date, $date, 1));
+            return response()->json($result);
+
+        //} catch (\Exception $e){
+            echo $e->getMessage();        
+        //} 
 
         
 
