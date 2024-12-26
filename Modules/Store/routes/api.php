@@ -2,12 +2,12 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use Modules\Store\Http\Controllers\MovementController;
-use Modules\Store\Http\Controllers\MovementDetailController;
-use Modules\Store\Http\Controllers\DailyClosingController;
 use Modules\Store\Actions\ExistenceAction;
-
-
+use Modules\Store\Http\Controllers\{
+    MovementController,
+    MovementDetailController,
+    DailyClosingController,SubWarehouseController
+};
 
 /*
 |--------------------------------------------------------------------------
@@ -74,4 +74,13 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/{close}', [DailyClosingController::class, 'show']);
         Route::post('/', [DailyClosingController::class, 'store']);
     });
+
+    Route::prefix('sub_warehouses')->group(function () {
+        Route::get('/', [SubWarehouseController::class, 'index']);
+        Route::get('/{sub_warehouse}', [SubWarehouseController::class, 'show']);
+        Route::post('/', [SubWarehouseController::class, 'store']);
+        Route::put('/{sub_warehouse}', [SubWarehouseController::class, 'update']);
+        Route::delete('/{id}', [SubWarehouseController::class,'destroy']);
+    });
+    Route::get('/sub_warehouses-help', [SubWarehouseController::class, 'help']);
 });
