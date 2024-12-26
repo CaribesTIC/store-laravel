@@ -21,7 +21,8 @@ class StoreDatabaseSeeder extends Seeder
             //OthersTableSeeder:class,
             MovementTableSeeder::class,
             MovementDetailTableSeeder::class,
-            SupportTypesSeeder::class
+            SupportTypesSeeder::class,
+            SubWarehouseSeeder::class
         ]);
     }
 }
