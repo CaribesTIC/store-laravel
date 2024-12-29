@@ -20,7 +20,7 @@ class UpdateSubWarehouseRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "uuid" => ["required"],  
+            // "uuid" => ["required"],  
             "name" => ["required"],  
             "description" => ["required"] 
             

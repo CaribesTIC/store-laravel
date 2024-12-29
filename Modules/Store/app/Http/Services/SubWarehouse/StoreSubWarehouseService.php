@@ -4,6 +4,8 @@ namespace Modules\Store\Http\Services\SubWarehouse;
 use Illuminate\Http\JsonResponse;
 use Modules\Store\Http\Requests\SubWarehouse\StoreSubWarehouseRequest;
 use Modules\Store\Entities\SubWarehouse;
+use Illuminate\Support\Str;
+
 
 class StoreSubWarehouseService
 {
@@ -11,7 +13,7 @@ class StoreSubWarehouseService
     {
         $sub_warehouse = new SubWarehouse;
 
-        $sub_warehouse->uuid = $request->uuid;
+        $sub_warehouse->uuid = (string)Str::uuid();
         $sub_warehouse->name = $request->name;
         $sub_warehouse->description = $request->description;
         
