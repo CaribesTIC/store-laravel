@@ -11,7 +11,7 @@ class UpdateSubWarehouseService
     {          
         // $sub_warehouse = SubWarehouse::find($request->id);
 
-        $sub_warehouse->uuid = $request->uuid;
+        // $sub_warehouse->uuid = $request->uuid;
         $sub_warehouse->name = $request->name;
         $sub_warehouse->description = $request->description;
         
