@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('sub_warehouses', function (Blueprint $table) {
             $table->id();
-            $table->uuid('uuid');
+            $table->uuid('uuid')->unique();
             $table->string('name');
             $table->text('description');            
             $table->timestamps();
