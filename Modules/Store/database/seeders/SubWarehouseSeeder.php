@@ -20,7 +20,7 @@ class SubWarehouseSeeder extends Seeder
         
         DB::statement("INSERT INTO public.sub_warehouses(uuid, name, description, created_at, updated_at) VALUES ('$uuid1','Sub Almacén Uno', 'Sub Almacén Uno Sub Almacén Uno Sub Almacén Uno', now(), now())");
         DB::statement("INSERT INTO public.sub_warehouses(uuid, name, description, created_at, updated_at) VALUES ('$uuid2','Sub Almacén Dos', 'Sub Almacén Dos Sub Almacén Dos Sub Almacén Dos', now(), now())");
-        DB::statement("INSERT INTO public.sub_warehouses(uuid, name, description, created_at, updated_at) VALUES ('$uuid3','Sub Almacén Tres', 'Sub Almacén Dos Sub Almacén Dos Sub Almacén Dos', now(), now())");
+        DB::statement("INSERT INTO public.sub_warehouses(uuid, name, description, created_at, updated_at) VALUES ('$uuid3','Sub Almacén Tres', 'Sub Almacén Tres Sub Almacén Tres Sub Almacén Tres', now(), now())");
 
     }
 }
