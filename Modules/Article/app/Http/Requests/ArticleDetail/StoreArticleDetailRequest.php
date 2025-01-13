@@ -25,10 +25,8 @@ class StoreArticleDetailRequest extends FormRequest
             'presentation_id' => ["required"],           
             'quantity' => ["required"],           
             'status' => ["required"],           
-            'user_insert_id' => ["required"]          
+            'user_insert_id' => ["required"], 
             'user_update_id' => ["required"]           
         ];
     }
 }
-
-
