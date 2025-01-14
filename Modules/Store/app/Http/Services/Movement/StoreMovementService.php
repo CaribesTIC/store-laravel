@@ -10,11 +10,15 @@ use Illuminate\Validation\Rule;
 use Modules\Store\Enums\MovementTypeEnum;
 use Modules\Store\Entities\{ Movement, MovementDetail };
 //use Modules\Store\Http\Requests\Movement\StoreMovementRequest;
+//https://stackoverflow.com/questions/46682530/validate-uuid-with-laravel-validation
+use Ramsey\Uuid\Uuid as UuidValidator;
 
 class StoreMovementService
 {
     static public function execute(Request $request, string $typeId): JsonResponse
     {
+        $uuidIsValid = UuidValidator::isValid($request->main["store_uuid"]);
+
         $dataMain = [
             'type_id' => $typeId,
             'date_time' => $request->main["date_time"],
@@ -24,6 +28,7 @@ class StoreMovementService
             'support_type_id' => $request->main["support_type_id"],
             'support_number' => $request->main["support_number"],
             'support_date' => '2024-10-10T15:45:00.000Z', //$request->main["support_date"],
+            'store_uuid' => $request->main["store_uuid"]
         ];
         
         $validatorMain = Validator::make(
@@ -58,6 +63,7 @@ class StoreMovementService
         $movement->support_date = $dataMainValidated['support_date'];
         $movement->user_insert_id = Auth::user()->id;
         $movement->user_update_id = Auth::user()->id;
+        $movement->store_uuid = $request->main["store_uuid"];        
 
         $dataDetailsValidated = $validatorDetails;
         $movementDetail = [];

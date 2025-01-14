@@ -50,6 +50,11 @@ class MovementDetailTableSeeder extends Seeder
         MovementDetail::create([ 'movement_id' => 8, 'article_id' => 3, 'quantity' => 20 ]);
         MovementDetail::create([ 'movement_id' => 8, 'article_id' => 4, 'quantity' => 10 ]);
 
+        // OTHER SUB-STORE ///////////////////////////////////////////////////////////////        
+
+        MovementDetail::create([ 'movement_id' => 9, 'article_id' => 1, 'quantity' => 20 ]);
+        MovementDetail::create([ 'movement_id' => 9, 'article_id' => 2, 'quantity' => 10 ]);
+        MovementDetail::create([ 'movement_id' => 9, 'article_id' => 3, 'quantity' => 20 ]);
     }
 }
 
