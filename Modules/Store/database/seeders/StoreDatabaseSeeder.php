@@ -19,10 +19,10 @@ class StoreDatabaseSeeder extends Seeder
         // $this->call("MovementTableSeeder");
         $this->call([
             //OthersTableSeeder:class,
+            SubWarehouseSeeder::class,
             MovementTableSeeder::class,
             MovementDetailTableSeeder::class,
-            SupportTypesSeeder::class,
-            SubWarehouseSeeder::class
+            SupportTypesSeeder::class
         ]);
     }
 }

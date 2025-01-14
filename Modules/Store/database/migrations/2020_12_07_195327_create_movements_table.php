@@ -30,6 +30,7 @@ class CreateMovementsTable extends Migration
             $table->integer('user_update_id')->default(1);
             $table->integer('user_edit_id')->default(1);
             $table->boolean('editing')->default(false);
+            $table->uuid('store_uuid')->nullable()->default(null);
             $table->timestamps();
         });
     }
