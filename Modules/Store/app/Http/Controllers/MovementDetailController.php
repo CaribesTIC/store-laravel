@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
 use Illuminate\Database\Eloquent\Collection;
+use Modules\Store\Entities\Movement;
 use Modules\Store\Entities\MovementDetail;
 //use Modules\Article\Repositories\ArticleDetailRepository;
 //use Modules\Article\Http\Requests\ArticleDetail\{
@@ -33,6 +34,20 @@ class MovementDetailController extends Controller
         
         return response()->json($movementDetails);
         //return MovementDetailRepository::getAllByMovement($request);
+    }
+
+    public function getAllByNumber(Request $request)//: Collection
+    {
+        $movement = Movement::select('id')
+            ->where('number', $request->supportNumber)
+            ->first();
+
+        $movementDetails = MovementDetail::
+          select("articles.*", "movement_details.*")
+          ->join('articles', 'movement_details.article_id', '=', 'articles.id')        
+          ->where('movement_id', $movement->id)->get();
+        
+        return response()->json($movementDetails);
     }
 
     /**
