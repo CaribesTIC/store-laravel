@@ -6,7 +6,8 @@ use Modules\Store\Actions\ExistenceAction;
 use Modules\Store\Http\Controllers\{
     MovementController,
     MovementDetailController,
-    DailyClosingController,SubWarehouseController
+    DailyClosingController,
+    SubWarehouseController
 };
 
 /*
@@ -67,6 +68,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::put('/{movement_detail}', [MovementDetailController::class, 'update']);
         Route::delete('/{id}', [MovementDetailController::class,'destroy']);
     });
+    Route::get('/movement_details_by_number/{supportNumber}/{typeId}', [MovementDetailController::class, 'getAllByNumber']);
+
 
     Route::prefix('daily-closings')->group(function () { 
         Route::get('/', [DailyClosingController::class, 'index']);
