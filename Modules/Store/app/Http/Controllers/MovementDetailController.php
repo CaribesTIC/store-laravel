@@ -36,19 +36,40 @@ class MovementDetailController extends Controller
         //return MovementDetailRepository::getAllByMovement($request);
     }
 
+    private static function validateTypeId(int $typeId)
+    {
+        if ($typeId===3) {
+          return 1;
+        } else if ($typeId===4) {
+          return 2;
+        } else {
+          return 0;
+        }
+
+    }
+
     public function getAllByNumber(Request $request)//: Collection
     {
-        $movement = Movement::select('id')
-            ->where('number', $request->supportNumber)
-            ->first();
+        $typeId = self::validateTypeId((int)$request->typeId);
 
-        $movementDetails = MovementDetail::
-          select("articles.*", "movement_details.*")
-          ->join('articles', 'movement_details.article_id', '=', 'articles.id')        
-          ->where('movement_id', $movement->id)->get();
+        $movement = Movement::select('id')
+            ->where([
+                [ 'number', $request->supportNumber ],
+                [ 'type_id', '=' , self::validateTypeId((int)$request->typeId) ]
+            ])            
+            ->first();
         
-        return response()->json($movementDetails);
-    }
+        if ($movement && $movement->id) {
+            $movementDetails = MovementDetail::select("articles.*", "movement_details.*")
+                ->join('articles', 'movement_details.article_id', '=', 'articles.id')        
+                ->where('movement_id', $movement->id)
+                ->get();
+
+            return response()->json($movementDetails);
+        }
+
+        return response()->json([]);        
+    }    
 
     /**
      * Store a newly created resource in storage.
