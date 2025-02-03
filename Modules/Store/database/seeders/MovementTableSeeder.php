@@ -35,7 +35,7 @@ class MovementTableSeeder extends Seeder
             'support_type_id' => 1,
             'support_number' => '000000000Z',
             'support_date' => date("Y-m-d H:i:s", strtotime($today."- 3 days")),
-            'store_uuid' => $storeUuid
+            // 'store_uuid' => $storeUuid // No more needed here
         ]);
 
         Movement::create([
@@ -48,7 +48,7 @@ class MovementTableSeeder extends Seeder
             'support_type_id' => 1,
             'support_number' => '000000000Y',
             'support_date' => date("Y-m-d H:i:s", strtotime($today."- 3 days")),
-            'store_uuid' => $storeUuid
+            // 'store_uuid' => $storeUuid // No more needed here
         ]);
         
         Movement::create([
@@ -61,7 +61,7 @@ class MovementTableSeeder extends Seeder
             'support_type_id' => 4,
             'support_number' => '000000000X',
             'support_date' => date("Y-m-d H:i:s", strtotime($today."- 3 days")),
-            'store_uuid' => $storeUuid
+            // 'store_uuid' => $storeUuid // No more needed here
         ]);
         
         //////////////////////////////////////////////////////////////////////
@@ -76,7 +76,7 @@ class MovementTableSeeder extends Seeder
             'support_type_id' => 1,
             'support_number' => '0000000002',
             'support_date' => date("Y-m-d H:i:s", strtotime($today."- 2 days")),
-            'store_uuid' => $storeUuid
+            // 'store_uuid' => $storeUuid // No more needed here
         ]);
     
         Movement::create([
@@ -89,7 +89,7 @@ class MovementTableSeeder extends Seeder
             'support_type_id' => 4,
             'support_number' => '000000000W',
             'support_date' => date("Y-m-d H:i:s", strtotime($today."- 2 days")),
-            'store_uuid' => $storeUuid
+            // 'store_uuid' => $storeUuid // No more needed here
         ]);
 
         //////////////////////////////////////////////////////////////////////
@@ -104,7 +104,7 @@ class MovementTableSeeder extends Seeder
             'support_type_id' => 4,
             'support_number' => '000000000X',
             'support_date' => date("Y-m-d H:i:s", strtotime($today."- 1 days")),
-            'store_uuid' => $storeUuid
+            // 'store_uuid' => $storeUuid // No more needed here
         ]);
         Movement::create([
             'type_id' => 2,
@@ -116,7 +116,7 @@ class MovementTableSeeder extends Seeder
             'support_type_id' => 1,
             'support_number' => '000000000Y',
             'support_date' => date("Y-m-d H:i:s", strtotime($today."- 1 days")),
-            'store_uuid' => $storeUuid
+            // 'store_uuid' => $storeUuid // No more needed here
         ]);
         
         Movement::create([
@@ -129,7 +129,7 @@ class MovementTableSeeder extends Seeder
             'support_type_id' => 4,
             'support_number' => '000000000X',
             'support_date' => date("Y-m-d H:i:s", strtotime($today."- 1 days")),
-            'store_uuid' => $storeUuid
+            // 'store_uuid' => $storeUuid // No more needed here
         ]);
 
         Movement::create([
@@ -142,7 +142,7 @@ class MovementTableSeeder extends Seeder
             'support_type_id' => 4,
             'support_number' => '0000000XYZ',
             'support_date' => date("Y-m-d H:i:s", strtotime($today)),
-            'store_uuid' => $subStores->last()->uuid
+            // 'store_uuid' => $subStores->last()->uuid // No more needed here
         ]);
     }
 }
