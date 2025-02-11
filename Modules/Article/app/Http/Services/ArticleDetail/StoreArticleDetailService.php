@@ -1,36 +1,42 @@
 <?php
+
 namespace Modules\Article\Http\Services\ArticleDetail;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Modules\Article\Entities\ArticleDetail;
-use Modules\Article\Http\Requests\ArticleDetail\StoreArticleDetailRequest;
 
 class StoreArticleDetailService
 {
-  
-    //static public function execute(StoreArticleDetailRequest $request): JsonResponse
-    static public function execute(Request $request): JsonResponse
+    public function execute(Request $request): JsonResponse
     {
+        // Validate the request data
+        $request->validate([
+            '*.article_id' => 'required|integer',
+            '*.id' => 'required|integer',
+            '*.quantity' => 'required|integer',
+        ]);
 
-        //return response()->json($request[0]);
-
-        ArticleDetail::where('article_id', intval($request[0]["article_id"]))->forceDelete();
+        // Delete existing details for the article
+        if($request->all() && count($request->all()) > 0) {
+            ArticleDetail::where('article_id', intval($request[0]["article_id"]))->forceDelete();
+        }
+        
 
         foreach ($request->all() as $rqst) {
             $articleDetail = new ArticleDetail();
             $articleDetail->article_id = $rqst["article_id"];
             $articleDetail->presentation_id = $rqst["id"];
             $articleDetail->quantity = $rqst["quantity"];
-            //$articleDetail->status = $rqst["status;
-            //$articleDetail->user_insert_id = $rqst["user_insert_id;
-            //$articleDetail->user_update_id = $rqst["user_update_id;
-            $articleDetail->save();            
+            // $articleDetail->status = 1; // You might want to set a default or get this from the request
+            // $articleDetail->user_insert_id = Auth::user()->id; // Make sure Auth is available or handle differently
+            // $articleDetail->user_update_id = Auth::user()->id;
+
+            $articleDetail->save();
         }
 
         return response()->json([
-            'message' => 'Article detail created',
+            'message' => 'Article details created successfully',
         ], 201);
     }
-
 }

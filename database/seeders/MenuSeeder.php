@@ -16,7 +16,7 @@ class MenuSeeder extends Seeder
     {
     
          Menu::create([ // id 1
-            "title" => "Dashboard",
+            "title" => "Panel de control",
             "menu_id" => null,
             "path" => "dashboard",
             "icon" => "dashboard.svg",
@@ -136,7 +136,7 @@ class MenuSeeder extends Seeder
         ]);
         
         Menu::create([ // id 16
-            "title" => "Users",
+            "title" => "Usuarios",
             "menu_id" => 11,
             "path" => "users",
             "icon" => "user.svg",

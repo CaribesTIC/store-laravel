@@ -17,7 +17,7 @@ class CreateArticlesTable extends Migration
             $table->id();            
             $table->string('int_cod', 15);
             $table->string('name',50);
-            $table->float('price')->default(100);
+            $table->float('price')->nullable();
             $table->integer('stock_min')->default(5);
             $table->integer('stock_max')->default(5);
             $table->integer('status')->default(1);

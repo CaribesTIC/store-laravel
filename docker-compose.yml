@@ -44,4 +44,5 @@ services:
 
 networks:
   store-network:
-    driver: bridge
+    external: true
+

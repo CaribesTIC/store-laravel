@@ -24,6 +24,7 @@ class ArticleDetailController extends Controller
      */
     public function getAllByArticle(Request $request)//: Collection
     {
+        //return response()->json($request, 201); $request->articleId
         return ArticleDetailRepository::getAllByArticle($request);
     }
 
@@ -34,9 +35,10 @@ class ArticleDetailController extends Controller
     public function store(Request $request): JsonResponse
     {
         //return  response()->json($request, 201);
-        return StoreArticleDetailService::execute($request);
+        $service = new StoreArticleDetailService();
+        return $service->execute($request);
     }
-    
+
     /**
      * Update the specified resource in storage.
      */

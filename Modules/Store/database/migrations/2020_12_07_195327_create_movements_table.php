@@ -20,8 +20,8 @@ class CreateMovementsTable extends Migration
             $table->string('number', 10);
             $table->dateTime('date_time',0)->useCurrent();
             $table->string('subject', 40);
-            $table->text('description');
-            $table->text('observation');
+            $table->text('description')->nullable();
+            $table->text('observation')->nullable();
             $table->date('close')->nullable();
             $table->integer('support_type_id');
             $table->string('support_number', 10);
