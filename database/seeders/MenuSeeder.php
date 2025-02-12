@@ -48,7 +48,7 @@ class MenuSeeder extends Seeder
         ]);
         
         Menu::create([ // id 5
-            "title" => "Reverso de Entradas",
+            "title" => "Reversos de Entrada",
             "menu_id" => 2,
             "path" => "input-reverses",
             "icon" => "input-reverses.svg",
@@ -56,7 +56,7 @@ class MenuSeeder extends Seeder
         ]);
 
         Menu::create([ // id 6
-            "title" => "Reverso de Salidas",
+            "title" => "Reversos de Salida",
             "menu_id" => 2,
             "path" => "output-reverses",
             "icon" => "output-reverses.svg",
@@ -136,7 +136,7 @@ class MenuSeeder extends Seeder
         ]);
         
         Menu::create([ // id 16
-            "title" => "Users",
+            "title" => "Usuarios",
             "menu_id" => 11,
             "path" => "users",
             "icon" => "user.svg",
