@@ -59,7 +59,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('/movements-help', [MovementController::class, 'help']);
 
-    Route::get('/existences', [ExistenceAction::class, 'index'] );
+    Route::get('/summary', [ExistenceAction::class, 'index'] );
 
     Route::prefix('movement_details')->group(function () {  
         Route::get('/{movementId}', [MovementDetailController::class, 'getAllByMovement']);
