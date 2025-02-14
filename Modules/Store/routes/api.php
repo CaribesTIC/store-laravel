@@ -2,12 +2,13 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use Modules\Store\Actions\ExistenceAction;
+use Modules\Store\Actions\{ExistenceAction, SummaryAction};
 use Modules\Store\Http\Controllers\{
     MovementController,
     MovementDetailController,
     DailyClosingController,
-    SubWarehouseController
+    SubWarehouseController,
+    DashboardController
 };
 
 /*
@@ -59,7 +60,14 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('/movements-help', [MovementController::class, 'help']);
 
-    Route::get('/summary', [ExistenceAction::class, 'index'] );
+    Route::get('/summary', [SummaryAction::class, 'index'] );
+    Route::get('/existences', [ExistenceAction::class, 'index'] );
+    Route::prefix('dashboard')->group(function () {
+      Route::get('/category-distribution', [DashboardController::class, 'getCategoryDistribution']); // Nueva ruta
+      Route::get('/stock-movements', [DashboardController::class, 'getStockMovements']); // Nueva ruta
+      Route::get('/low-stock-items', [DashboardController::class, 'getLowStockItems']); // Nueva ruta
+      Route::get('/warehouses', [DashboardController::class, 'getWarehouses']); // Nueva ruta
+    });
 
     Route::prefix('movement_details')->group(function () {  
         Route::get('/{movementId}', [MovementDetailController::class, 'getAllByMovement']);
