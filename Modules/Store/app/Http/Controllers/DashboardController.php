@@ -50,7 +50,7 @@ class DashboardController extends Controller
     {
         $lowStockItems = DB::connection('pgsql')->table('articles') // Changed to pgsql
             ->select('articles.id as article_id', 'articles.name', 'view_stocks_by_accumulated_plus_unclosed_movements.stock_current', 'articles.stock_min', 'movements.date_time as last_entry')
-            ->join('view_stocks_by_accumulated_plus_unclosed_movements', 'articles.id', '=', 'view_stocks_by_accumulated_plus_unclosed_movements.article_id')
+            ->join('view_stocks_by_accumulated_plus_unclosed_movements', 'articles.id', '=', 'view_stocks_by_accumulated_plus_unclosed_movements.id')
             ->leftJoin('movement_details', 'articles.id', '=', 'movement_details.article_id')
             ->leftJoin('movements', 'movement_details.movement_id', '=', 'movements.id')
             ->where('stock_current', '<=', DB::raw('articles.stock_min'))
@@ -66,7 +66,7 @@ class DashboardController extends Controller
      */
     public function getWarehouses(): JsonResponse
     {
-        $warehouses = DB::connection('pgsql_store')->table('sub_warehouses')
+        $warehouses = DB::table('sub_warehouses')
             ->select('uuid', 'name')
             ->get();
 
